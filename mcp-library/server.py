@@ -367,5 +367,121 @@ def query_library_guidelines_and_faqs(user_prompt: str, top_k: int = 5) -> list:
         
     return results
 
+def load_floor_plan():
+    """Reads the library floor plan dataset."""
+    filepath = os.path.join(os.path.dirname(__file__), "data", "floor_plan.json")
+    if not os.path.exists(filepath):
+        return {}
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception as e:
+        import sys
+        print(f"Error loading floor_plan.json: {e}", file=sys.stderr)
+        return {}
+
+def locate_facility_internal(facility_name: str) -> list:
+    floor_plan = load_floor_plan()
+    if not floor_plan:
+        return []
+        
+    query = facility_name.lower().strip()
+    
+    # Predefined synonyms/expansions for common search terms
+    synonyms = {
+        "bound journals": ["periodicals", "journals", "stacks", "archives"],
+        "journals": ["periodicals", "stacks"],
+        "study room": ["reading", "study", "carrels"],
+        "reading room": ["reading", "study", "carrels"],
+        "photocopy": ["photostat", "reprographic"],
+        "printing": ["photostat", "reprographic"],
+        "copier": ["photostat", "reprographic"],
+        "thesis": ["theses", "dissertations"],
+        "dissertation": ["theses", "dissertations"],
+        "staff": ["office", "staff room"],
+        "procurement": ["acquisition"]
+    }
+    
+    search_terms = [query]
+    for key, syn_list in synonyms.items():
+        if key in query:
+            search_terms.extend(syn_list)
+            
+    search_terms = list(dict.fromkeys(search_terms))
+    
+    floors = floor_plan.get("floors", {})
+    results = []
+    
+    for term in search_terms:
+        for floor_id, floor_data in floors.items():
+            floor_name = floor_data.get("name", floor_id.replace("_", " ").title())
+            areas = floor_data.get("areas", {})
+            for zone, items in areas.items():
+                for item in items:
+                    if term in item.lower() or item.lower() in term:
+                        results.append({
+                            "facility": item,
+                            "floor_name": floor_name,
+                            "zone": zone.replace("_", " ").title()
+                        })
+                        
+        location_index = floor_plan.get("location_index", {})
+        for name, floors_mapped in location_index.items():
+            if term in name.lower() or name.lower() in term:
+                mapped_floors = floors_mapped if isinstance(floors_mapped, list) else [floors_mapped]
+                for f_id in mapped_floors:
+                    floor_data = floors.get(f_id, {})
+                    floor_name = floor_data.get("name", f_id.replace("_", " ").title())
+                    
+                    zone_name = "General Area"
+                    areas = floor_data.get("areas", {})
+                    for zone, items in areas.items():
+                        if name in items:
+                            zone_name = zone.replace("_", " ").title()
+                            break
+                            
+                    results.append({
+                        "facility": name,
+                        "floor_name": floor_name,
+                        "zone": zone_name
+                    })
+                    
+    seen = set()
+    deduped = []
+    for r in results:
+        key = (r["facility"], r["floor_name"])
+        if key not in seen:
+            seen.add(key)
+            deduped.append(r)
+            
+    return deduped
+
+@mcp.tool()
+def locate_library_facility(facility_name: str) -> str:
+    """
+    Locate a facility, section, or office inside the Mahatma Gandhi Central Library (MGCL).
+    
+    Args:
+        facility_name: Name of the facility to locate (e.g. "reference section", "study room", "bound journals", "librarian office").
+        
+    Returns:
+        A precise text instruction directing the student to the exact floor and zone.
+    """
+    results = locate_facility_internal(facility_name)
+    if not results:
+        return f"Could not find any library facility matching '{facility_name}' in the floor plan."
+        
+    instructions = [f"Here are the locations matching '{facility_name}':"]
+    for r in results:
+        facility = r["facility"]
+        floor_name = r["floor_name"]
+        zone = r["zone"]
+        instructions.append(
+            f"- **{facility}**: Located on the **{floor_name}** in the **{zone}** section."
+        )
+        
+    return "\n".join(instructions)
+
 if __name__ == "__main__":
     mcp.run()
+
