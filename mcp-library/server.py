@@ -1,7 +1,12 @@
 import os
+import sys
 import json
 import re
+import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer
 from mcp.server.fastmcp import FastMCP
+
 
 # Instantiate the FastMCP server
 mcp = FastMCP("IITR Library Server")
@@ -88,6 +93,60 @@ def get_keywords_for_course(course_code: str) -> list:
             return keywords
             
     return [prefix.lower()]
+
+def load_and_chunk_markdown_files():
+    """Reads and chunks informational markdown files into paragraphs."""
+    data_dir = os.path.join(os.path.dirname(__file__), "data")
+    filenames = [
+        "faq.md",
+        "services.md",
+        "Terms_and_Conditions.md",
+        "library_membership_notice.md",
+        "tbls_book_distribution.md"
+    ]
+    chunks = []
+    for filename in filenames:
+        filepath = os.path.join(data_dir, filename)
+        if not os.path.exists(filepath):
+            continue
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+                # Split by paragraphs
+                paragraphs = content.split("\n\n")
+                for p in paragraphs:
+                    p_clean = p.strip()
+                    if len(p_clean) > 30:  # Skip headers or very short sentences
+                        chunks.append({
+                            "source": filename,
+                            "text": p_clean
+                        })
+        except Exception as e:
+            import sys
+            print(f"Error reading {filename}: {e}", file=sys.stderr)
+    return chunks
+
+# --- Build Semantic Search Index ---
+
+print("Initializing sentence-transformers model...", file=sys.stderr)
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+print("Loading and chunking markdown guidelines...", file=sys.stderr)
+chunks = load_and_chunk_markdown_files()
+
+if chunks:
+    print(f"Embedding {len(chunks)} text chunks...", file=sys.stderr)
+    corpus_embeddings = model.encode([c["text"] for c in chunks], convert_to_numpy=True)
+    
+    dimension = corpus_embeddings.shape[1]
+    index = faiss.IndexFlatIP(dimension)
+    
+    faiss.normalize_L2(corpus_embeddings)
+    index.add(corpus_embeddings)
+    print("FAISS index built successfully.", file=sys.stderr)
+else:
+    print("No chunks found. FAISS index not created.", file=sys.stderr)
+    index = None
 
 
 # --- MCP Tools ---
@@ -272,6 +331,41 @@ def get_textbook_or_staff_details(course_code: str = None, staff_role: str = Non
         "textbooks": textbooks,
         "staff": staff
     }
+
+@mcp.tool()
+def query_library_guidelines_and_faqs(user_prompt: str, top_k: int = 5) -> list:
+    """
+    Semantic search tool to query Mahatma Gandhi Central Library guidelines, policies, schedules, and FAQs.
+    
+    Args:
+        user_prompt: The search query / prompt describing what operational rules or guidelines you want to find.
+        top_k: Number of relevant results to return (default 5).
+        
+    Returns:
+        A list of dictionaries representing the most relevant matching paragraphs, including the source file, score, and text.
+    """
+    if not index or not chunks:
+        return []
+        
+    # Encode and normalize query
+    query_vector = model.encode([user_prompt], convert_to_numpy=True)
+    faiss.normalize_L2(query_vector)
+    
+    # Search index
+    distances, indices = index.search(query_vector, top_k)
+    
+    results = []
+    for score, idx in zip(distances[0], indices[0]):
+        if idx == -1:
+            continue
+        chunk = chunks[idx]
+        results.append({
+            "score": float(score),
+            "source": chunk["source"],
+            "text": chunk["text"]
+        })
+        
+    return results
 
 if __name__ == "__main__":
     mcp.run()
