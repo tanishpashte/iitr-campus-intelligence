@@ -1,0 +1,3 @@
+mcp
+sentence-transformers
+faiss-cpu
