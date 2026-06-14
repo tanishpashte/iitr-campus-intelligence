@@ -21,16 +21,18 @@ import {
 } from "lucide-react";
 
 interface Message {
-  sender: "user" | "assistant";
+  id: string;
+  sender: "user" | "ai";
   text: string;
-  time: string;
+  time?: string;
 }
 
 export default function Home() {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
-      sender: "assistant",
+      id: "init",
+      sender: "ai",
       text: "Hello! I am your IITR Campus Assistant. What would you like to ask?",
       time: "10:00 AM"
     }
@@ -66,7 +68,12 @@ export default function Home() {
 
     const userText = chatInput;
     const timeString = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const userMsg: Message = { sender: "user", text: userText, time: timeString };
+    const userMsg: Message = {
+      id: `msg-${Date.now()}-user`,
+      sender: "user",
+      text: userText,
+      time: timeString
+    };
 
     setMessages((prev) => [...prev, userMsg]);
     setChatInput("");
@@ -91,7 +98,8 @@ export default function Home() {
         setMessages((prev) => [
           ...prev,
           {
-            sender: "assistant",
+            id: `msg-${Date.now()}-ai`,
+            sender: "ai",
             text: data.response,
             time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           }
@@ -160,7 +168,13 @@ export default function Home() {
       reply = "I've checked the campus database, but I couldn't find matching information. You can ask me about mess menus, schedules, Thomso events, or library facilities.";
     }
 
-    setMessages((prev) => [...prev, { sender: "assistant", text: reply, time: timestamp }]);
+    const aiMsg: Message = {
+      id: `msg-${Date.now()}-ai`,
+      sender: "ai",
+      text: reply,
+      time: timestamp
+    };
+    setMessages((prev) => [...prev, aiMsg]);
     if (component) {
       setActiveComponent(component);
       setComponentData(data);
@@ -475,15 +489,15 @@ export default function Home() {
 
       {/* RIGHT: AI ASSISTANT PANEL */}
       <aside className="w-96 border-l border-slate-200 bg-white flex flex-col h-full shrink-0 shadow-lg shadow-slate-100/30">
-        {/* Panel Header */}
-        <div className="h-16 border-b border-slate-200/80 flex items-center justify-between px-6 bg-slate-50/50">
+        {/* Header: A simple container displaying an avatar icon and title */}
+        <div className="h-16 border-b border-slate-200/80 flex items-center justify-between px-4 bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-2.5">
-            <span className="p-1.5 bg-indigo-600 text-white rounded-lg">
+            <span className="p-1.5 bg-slate-600 text-white rounded-lg">
               <Bot className="h-4 w-4" />
             </span>
             <div>
               <h2 className="text-xs font-bold text-slate-900 flex items-center gap-1">
-                Campus Assistant
+                Campus Intelligence Brain
               </h2>
               <p className="text-[9px] text-slate-400 font-semibold tracking-wider uppercase flex items-center gap-1">
                 <span className={`h-1.5 w-1.5 rounded-full ${isLoading ? "bg-amber-500 animate-pulse" : "bg-emerald-500"}`}></span>
@@ -496,11 +510,11 @@ export default function Home() {
           </span>
         </div>
 
-        {/* Message Log */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/15">
-          {messages.map((msg, index) => (
+        {/* Message Timeline: A scrollable middle pane */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/15">
+          {messages.map((msg) => (
             <div
-              key={index}
+              key={msg.id}
               className={`flex flex-col max-w-[85%] ${
                 msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
               }`}
@@ -508,13 +522,15 @@ export default function Home() {
               <div
                 className={`p-3 rounded-2xl text-xs leading-relaxed shadow-sm ${
                   msg.sender === "user"
-                    ? "bg-indigo-600 text-white rounded-tr-none"
+                    ? "bg-slate-600 text-white rounded-tr-none"
                     : "bg-white border border-slate-200/60 text-slate-800 rounded-tl-none"
                 }`}
               >
                 {msg.text}
               </div>
-              <span className="text-[9px] text-slate-400 mt-1 px-1 font-medium">{msg.time}</span>
+              {msg.time && (
+                <span className="text-[9px] text-slate-400 mt-1 px-1 font-medium">{msg.time}</span>
+              )}
             </div>
           ))}
           {isLoading && (
@@ -526,8 +542,8 @@ export default function Home() {
           )}
         </div>
 
-        {/* Chat Input Area */}
-        <div className="p-4 border-t border-slate-200 bg-white">
+        {/* Input Dock: A fixed footer container holding input and Send button */}
+        <div className="p-4 border-t border-slate-200 bg-white shrink-0">
           <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
             <input
               type="text"
@@ -535,12 +551,12 @@ export default function Home() {
               onChange={(e) => setChatInput(e.target.value)}
               disabled={isLoading}
               placeholder="Ask me anything..."
-              className="flex-1 bg-slate-100 hover:bg-slate-100/80 focus:bg-slate-50 disabled:bg-slate-50 text-xs py-3 px-4 pr-12 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-600/20 border-none transition-all duration-200"
+              className="flex-1 bg-slate-100 hover:bg-slate-100/80 focus:bg-slate-50 disabled:bg-slate-50 text-xs py-3 px-4 pr-12 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-600/20 border-none transition-all duration-200"
             />
             <button
               type="submit"
               disabled={!chatInput.trim() || isLoading}
-              className="absolute right-2 p-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-200 text-white disabled:text-slate-400 rounded-xl transition-all duration-200 cursor-pointer"
+              className="absolute right-2 p-2 bg-slate-600 hover:bg-slate-700 disabled:bg-slate-200 text-white disabled:text-slate-400 rounded-xl transition-all duration-200 cursor-pointer"
             >
               <Send className="h-4 w-4" />
             </button>
