@@ -46,5 +46,46 @@ def get_current_mess_meal(meal_type: str) -> list:
 
     raise ValueError(f"Menu for {current_day} not found in the menu data.")
 
+@mcp.tool()
+def get_canteen_alternatives_by_budget(max_price: int) -> list:
+    """
+    Get all canteen menu items that are within a specific budget (price <= max_price).
+
+    Args:
+        max_price: The maximum price (budget) in Rs.
+
+    Returns:
+        A list of formatted strings of canteen items and their prices (e.g., "Item Name - Rs. Price").
+    """
+    # Load canteen-menu.json (or fallback to canteen_menu.json)
+    data_dir = os.path.join(os.path.dirname(__file__), "data")
+    possible_names = ["canteen-menu.json", "canteen_menu.json"]
+    menu_data = None
+
+    for name in possible_names:
+        filepath = os.path.join(data_dir, name)
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                menu_data = json.load(f)
+            break
+
+    if not menu_data:
+        raise FileNotFoundError("Canteen menu data file not found.")
+
+    menu = menu_data.get("menu", {})
+    alternatives = []
+
+    for category, items in menu.items():
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if isinstance(item, dict) and "item" in item and "price_rs" in item:
+                price = item["price_rs"]
+                if price <= max_price:
+                    alternatives.append(f"{item['item']} - Rs. {price}")
+
+    return alternatives
+
 if __name__ == "__main__":
     mcp.run()
+
