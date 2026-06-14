@@ -25,6 +25,7 @@ interface Message {
   sender: "user" | "ai";
   text: string;
   time?: string;
+  isLoading?: boolean;
 }
 
 export default function Home() {
@@ -75,17 +76,26 @@ export default function Home() {
       time: timeString
     };
 
-    setMessages((prev) => [...prev, userMsg]);
+    const aiPlaceholderId = `msg-${Date.now()}-ai`;
+    const aiPlaceholderMsg: Message = {
+      id: aiPlaceholderId,
+      sender: "ai",
+      text: "",
+      isLoading: true,
+      time: timeString
+    };
+
+    setMessages((prev) => [...prev, userMsg, aiPlaceholderMsg]);
     setChatInput("");
     setIsLoading(true);
 
     try {
       if (isSimulated) {
         // Run simulated backend response logic
-        await simulateResponse(userText);
+        await simulateResponse(userText, aiPlaceholderId);
       } else {
         // Call actual FastAPI server endpoint
-        const res = await fetch("http://localhost:8000/chat", {
+        const res = await fetch("http://localhost:8000/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userText })
@@ -95,32 +105,30 @@ export default function Home() {
 
         const data = await res.json();
         
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: `msg-${Date.now()}-ai`,
-            sender: "ai",
-            text: data.response,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-          }
-        ]);
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === aiPlaceholderId
+              ? { ...msg, text: data.response, isLoading: false }
+              : msg
+          )
+        );
 
-        if (data.ui_component && data.data) {
-          setActiveComponent(data.ui_component);
-          setComponentData(data.data);
+        if (data.ui_data && data.ui_data.ui_component && data.ui_data.data) {
+          setActiveComponent(data.ui_data.ui_component);
+          setComponentData(data.ui_data.data);
         }
       }
     } catch (err) {
       console.warn("Backend unavailable, running simulated responses:", err);
       setIsSimulated(true);
-      await simulateResponse(userText);
+      await simulateResponse(userText, aiPlaceholderId);
     } finally {
       setIsLoading(false);
     }
   };
 
   // Minimal simulated responses for offline testing
-  const simulateResponse = async (text: string) => {
+  const simulateResponse = async (text: string, placeholderId: string) => {
     await new Promise((resolve) => setTimeout(resolve, 800));
     const lower = text.toLowerCase();
     let reply = "";
@@ -168,13 +176,13 @@ export default function Home() {
       reply = "I've checked the campus database, but I couldn't find matching information. You can ask me about mess menus, schedules, Thomso events, or library facilities.";
     }
 
-    const aiMsg: Message = {
-      id: `msg-${Date.now()}-ai`,
-      sender: "ai",
-      text: reply,
-      time: timestamp
-    };
-    setMessages((prev) => [...prev, aiMsg]);
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === placeholderId
+          ? { ...msg, text: reply, isLoading: false }
+          : msg
+      )
+    );
     if (component) {
       setActiveComponent(component);
       setComponentData(data);
@@ -526,20 +534,21 @@ export default function Home() {
                     : "bg-white border border-slate-200/60 text-slate-800 rounded-tl-none"
                 }`}
               >
-                {msg.text}
+                {msg.isLoading ? (
+                  <div className="flex gap-1 items-center py-1">
+                    <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
+                    <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
+                    <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                  </div>
+                ) : (
+                  msg.text
+                )}
               </div>
               {msg.time && (
                 <span className="text-[9px] text-slate-400 mt-1 px-1 font-medium">{msg.time}</span>
               )}
             </div>
           ))}
-          {isLoading && (
-            <div className="flex gap-1.5 items-center mr-auto bg-white border border-slate-200/50 px-4 py-2.5 rounded-2xl rounded-tl-none shadow-sm">
-              <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
-              <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
-              <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
-            </div>
-          )}
         </div>
 
         {/* Input Dock: A fixed footer container holding input and Send button */}

@@ -72,8 +72,7 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     response: str
-    ui_component: Optional[str] = None
-    data: Optional[Any] = None
+    ui_data: Optional[Dict[str, Any]] = None
     triggered_tools: List[Dict[str, Any]] = []
 
 class LifespanState:
@@ -215,7 +214,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/api/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
     if not state.genai_client:
         raise HTTPException(status_code=503, detail="Gemini client is not initialized.")
@@ -291,22 +290,24 @@ async def chat_endpoint(request: ChatRequest):
         # Compile response structure
         response_text = response.text if response.text else "[No text response returned]"
         
-        ui_component = None
-        data = None
+        ui_data = None
         if triggered_tools:
             # Pick first successful tool call metadata, or fallback to first tool call if all errored
             successful = [t for t in triggered_tools if "error" not in t]
             if successful:
-                ui_component = successful[0]["ui_component"]
-                data = successful[0]["data"]
+                ui_data = {
+                    "ui_component": successful[0]["ui_component"],
+                    "data": successful[0]["data"]
+                }
             else:
-                ui_component = triggered_tools[0]["ui_component"]
-                data = triggered_tools[0].get("data")
+                ui_data = {
+                    "ui_component": triggered_tools[0]["ui_component"],
+                    "data": triggered_tools[0].get("data")
+                }
                 
         return ChatResponse(
             response=response_text,
-            ui_component=ui_component,
-            data=data,
+            ui_data=ui_data,
             triggered_tools=triggered_tools
         )
         
