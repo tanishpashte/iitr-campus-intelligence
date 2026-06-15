@@ -78,6 +78,7 @@ class ChatResponse(BaseModel):
 
 class DashboardInitResponse(BaseModel):
     ui_data: Optional[Dict[str, Any]] = None
+    academics: Optional[Dict[str, Any]] = None
 
 class LifespanState:
     def __init__(self):
@@ -324,8 +325,8 @@ async def chat_endpoint(request: ChatRequest):
 
 @app.get("/api/dashboard/init", response_model=DashboardInitResponse)
 async def dashboard_init_endpoint():
-    if not state.session_mess:
-        raise HTTPException(status_code=503, detail="Mess service is not initialized.")
+    if not state.session_mess or not state.session_acad:
+        raise HTTPException(status_code=503, detail="Mess or Academics service is not initialized.")
         
     # Determine meal type based on local time
     now = datetime.now()
@@ -343,7 +344,9 @@ async def dashboard_init_endpoint():
     else:
         meal_type = "dinner"
         
-    print(f"⚙️ Running direct bypass dashboard init logic. Current time: {current_time}. Fetching: '{meal_type}' meal...", flush=True)
+    weekday = now.strftime("%A")
+    date_str = now.strftime("%Y-%m-%d")
+    print(f"⚙️ Running direct bypass dashboard init logic. Current time: {current_time}. Fetching: '{meal_type}' meal and Academics data for {weekday} ({date_str})...", flush=True)
     
     try:
         # Call the mess server directly
@@ -360,9 +363,21 @@ async def dashboard_init_endpoint():
                 "active_meal": meal_type
             }
         }
+
+        # Call the Academics Server tools directly
+        timetable_result = await state.session_acad.call_tool("get_timetable_by_day", {"day": weekday})
+        timetable_data = extract_tool_data(timetable_result)
+
+        calendar_result = await state.session_acad.call_tool("get_calendar_events_by_date", {"date_str": date_str})
+        calendar_data = extract_tool_data(calendar_result)
+
+        academics_dict = {
+            "timetable": timetable_data,
+            "calendar": calendar_data
+        }
         
-        print(f"✅ Dashboard init successfully fetched '{meal_type}' meal menu.", flush=True)
-        return DashboardInitResponse(ui_data=ui_data)
+        print(f"✅ Dashboard init successfully fetched '{meal_type}' meal menu and Academics data.", flush=True)
+        return DashboardInitResponse(ui_data=ui_data, academics=academics_dict)
     except Exception as e:
         print(f"❌ Error in direct bypass dashboard init: {e}", file=sys.stderr, flush=True)
         raise HTTPException(status_code=500, detail=str(e))

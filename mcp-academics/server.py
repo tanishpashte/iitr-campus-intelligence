@@ -360,5 +360,70 @@ def search_calendar(query: str, top_k: int = 5) -> List[str]:
     except Exception as e:
         return [f"Error performing semantic search: {str(e)}"]
 
+@mcp.tool()
+def get_timetable_by_day(day: str) -> str:
+    """
+    Get the complete timetable array block matching a weekday name.
+    
+    Args:
+        day (str): The day of the week to get timetable for (e.g. 'Monday', 'Friday').
+    """
+    try:
+        timetable = load_timetable_data()
+        return json.dumps(timetable.get("weekly_schedule", {}).get(day.capitalize(), []))
+    except Exception as e:
+        print(f"Error loading timetable: {e}", file=sys.stderr)
+        return "[]"
+
+@mcp.tool()
+def get_calendar_events_by_date(date_str: str) -> dict:
+    """
+    Get any matching events, reschedulings, or holidays for a target date from the academic calendar.
+    
+    Args:
+        date_str (str): The date to check in YYYY-MM-DD format.
+    """
+    try:
+        calendar = load_calendar_data()
+    except Exception as e:
+        print(f"Error loading calendar: {e}", file=sys.stderr)
+        return {
+            "chronological_schedule": [],
+            "time_table_rescheduling": [],
+            "official_holidays": []
+        }
+    
+    matching_events = []
+    # Check chronological_schedule
+    for event in calendar.get("chronological_schedule", []):
+        # check start_date/end_date
+        if "start_date" in event and "end_date" in event:
+            if event["start_date"] <= date_str <= event["end_date"]:
+                matching_events.append(event)
+        elif "date_slots" in event:
+            for slot in event["date_slots"]:
+                if slot.get("start") <= date_str <= slot.get("end"):
+                    matching_events.append(event)
+                    break
+        elif "tentative_dates" in event:
+            if date_str in event["tentative_dates"]:
+                matching_events.append(event)
+                
+    matching_rescheduling = []
+    for res in calendar.get("time_table_rescheduling", []):
+        if res.get("rescheduled_date") == date_str:
+            matching_rescheduling.append(res)
+            
+    matching_holidays = []
+    for h in calendar.get("official_holidays", []):
+        if h.get("date") == date_str:
+            matching_holidays.append(h)
+            
+    return {
+        "chronological_schedule": matching_events,
+        "time_table_rescheduling": matching_rescheduling,
+        "official_holidays": matching_holidays
+    }
+
 if __name__ == "__main__":
     mcp.run()
