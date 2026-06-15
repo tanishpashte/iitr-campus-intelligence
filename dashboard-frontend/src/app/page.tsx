@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import ReactMarkdown from 'react-markdown';
 import {
   GraduationCap,
   Calendar,
@@ -17,7 +18,9 @@ import {
   Mail,
   Phone,
   Clock,
-  MapPin
+  MapPin,
+  AlertCircle,
+  CheckCircle2
 } from "lucide-react";
 
 interface Message {
@@ -41,6 +44,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isSimulated, setIsSimulated] = useState(false);
+  const [initData, setInitData] = useState<any>(null);
+  const [activeMealView, setActiveMealView] = useState<string>(() => {
+    const hour = new Date().getHours();
+    if (hour < 10) return "breakfast";
+    if (hour < 15) return "lunch";
+    return "dinner";
+  });
+  const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
 
   // Status of the 4 MCP services we actually possess
   const mcpServices = [
@@ -49,6 +60,70 @@ export default function Home() {
     { name: "Mess & Canteen", description: "Bhawan daily menu & prices", icon: Utensils, color: "text-amber-600 bg-amber-50" },
     { name: "Thomso Events", description: "Festival schedule & semantic search", icon: Calendar, color: "text-rose-600 bg-rose-50" }
   ];
+
+  const simulatedInitData = {
+    ui_data: {
+      type: "mess_menu",
+      data: {
+        breakfast: ["Paneer Paratha", "Butter/Jam", "Boiled Egg/Banana", "Milk/Tea"],
+        lunch: ["Kadhai Paneer", "Dal Fry", "Plain Rice", "Butter Roti", "Cucumber Salad", "Ice Cream"],
+        dinner: ["Chana Masala", "Aloo Matar Curry", "Palak Puri", "Rice", "Rice kheer with Dry Fruits"],
+        active_meal: "dinner"
+      }
+    },
+    academics: {
+      timetable: [
+        {
+          time: "09.00-09.55",
+          type: "Lecture",
+          course_code: "HSS-302",
+          batch: "Batch 1",
+          professor: "Anindya Jayanta Mishra",
+          room_no: "APJ AKB-101",
+          course_name: "Social Studies of Science"
+        },
+        {
+          time: "14.00-14.55",
+          type: "Lecture",
+          course_code: "MIL-310",
+          batch: "Batch 1",
+          professor: "Pradeep Kumar",
+          room_no: "APJ AKB-001",
+          course_name: "Quality Management"
+        },
+        {
+          time: "15.00-15.55",
+          type: "Lecture",
+          course_code: "MIC-302",
+          batch: "Batch 1 (P11, P12)",
+          professor: "Bhanu Mishra, Vidit Gaur",
+          room_no: "APJ AKB-001",
+          course_name: "Machine Design"
+        },
+        {
+          time: "16.05-17.00",
+          type: "Lecture",
+          course_code: "MIL-335",
+          batch: "Batch 1",
+          professor: "Akshay Dvivedi",
+          room_no: "APJ AKB-003",
+          course_name: "Concurrent Engineering"
+        }
+      ],
+      calendar: {
+        chronological_schedule: [
+          {
+            details: "Orientation Program - Newly Admitted UG Students",
+            start_date: "2026-07-25",
+            end_date: "2026-07-26",
+            days: ["Saturday", "Sunday"]
+          }
+        ],
+        time_table_rescheduling: [],
+        official_holidays: []
+      }
+    }
+  };
 
   // Try to check if backend API is running, and set simulation mode if not
   useEffect(() => {
@@ -62,12 +137,15 @@ export default function Home() {
         if (res && res.ok) return res.json();
       })
       .then((data) => {
-        if (data && data.ui_data) {
-          setDashboardData(data.ui_data);
+        if (data && data.academics && data.ui_data) {
+          setInitData(data);
+        } else {
+          setInitData(simulatedInitData);
         }
       })
       .catch(() => {
         setIsSimulated(true);
+        setInitData(simulatedInitData);
       });
   }, []);
 
@@ -112,7 +190,7 @@ export default function Home() {
         if (!res.ok) throw new Error("API Server error");
 
         const data = await res.json();
-        
+
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === aiPlaceholderId
@@ -224,36 +302,36 @@ export default function Home() {
         const breakfast = (!isArray && dashboardData.data?.breakfast) ? dashboardData.data.breakfast : ["Poha Jalebi", "Masala Sprouts", "Banana", "Milk/Tea"];
         const lunch = isArray ? lines : (dashboardData.data?.lunch || lines);
         const dinner = (!isArray && dashboardData.data?.dinner) ? dashboardData.data.dinner : ["Chana Masala", "Aloo Matar Curry", "Palak Puri", "Rice Kheer"];
-        
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
             <div className="flex justify-between items-center border-b border-slate-100 pb-4">
-              <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                <Utensils className="h-5 w-5 text-amber-500" /> Daily Bhawan Mess Menu
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <Utensils className="h-6 w-6 text-amber-500" /> Daily Bhawan Mess Menu
               </h4>
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider bg-slate-100 px-2.5 py-1 rounded-full">Jawahar Bhawan</span>
+              <span className="text-sm font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full">Jawahar Bhawan</span>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Breakfast Column */}
               <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
-                <h5 className="text-xs font-extrabold text-amber-800 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded w-max">Breakfast</h5>
+                <h5 className="text-base font-bold text-amber-800 uppercase tracking-wider bg-amber-50 px-2.5 py-1 rounded w-max">Breakfast</h5>
                 <ul className="space-y-2">
                   {breakfast.map((item: string, i: number) => (
-                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                    <li key={i} className="text-base font-semibold text-slate-700 flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0"></span>
                       {item}
                     </li>
                   ))}
                 </ul>
               </div>
-              
+
               {/* Lunch Column */}
               <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
-                <h5 className="text-xs font-extrabold text-indigo-800 uppercase tracking-wider bg-indigo-50 px-2 py-1 rounded w-max">Lunch</h5>
+                <h5 className="text-base font-bold text-indigo-800 uppercase tracking-wider bg-indigo-50 px-2.5 py-1 rounded w-max">Lunch</h5>
                 <ul className="space-y-2">
                   {lunch.map((item: string, i: number) => (
-                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                    <li key={i} className="text-base font-semibold text-slate-700 flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 shrink-0"></span>
                       {item}
                     </li>
@@ -263,10 +341,10 @@ export default function Home() {
 
               {/* Dinner Column */}
               <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
-                <h5 className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded w-max">Dinner</h5>
+                <h5 className="text-base font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded w-max">Dinner</h5>
                 <ul className="space-y-2">
                   {dinner.map((item: string, i: number) => (
-                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                    <li key={i} className="text-base font-semibold text-slate-700 flex items-center gap-2">
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0"></span>
                       {item}
                     </li>
@@ -283,12 +361,12 @@ export default function Home() {
         const lines = getLines(dashboardData.data);
         const titleStr = lines.find((item: string) => item.startsWith("==="))?.replace(/===/g, "").trim() || "Academic Calendar Milestones";
         const events = lines.filter((item: string) => !item.startsWith("===") && !item.startsWith("---"));
-        
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
             <div className="border-b border-slate-100 pb-4">
-              <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                <GraduationCap className="h-5 w-5 text-blue-500" /> {titleStr}
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <GraduationCap className="h-6 w-6 text-blue-500" /> {titleStr}
               </h4>
             </div>
 
@@ -298,15 +376,15 @@ export default function Home() {
                 const dateHeader = parts[0] || "";
                 const details = parts[1] || "";
                 const isHoliday = details.toLowerCase().includes("holiday") || event.toLowerCase().includes("holiday");
-                
+
                 return (
                   <div key={idx} className="relative group">
-                    <span className={`absolute -left-[21px] top-1.5 h-3 w-3 rounded-full border-2 border-white ring-4 ring-white ${isHoliday ? "bg-rose-500 ring-rose-50" : "bg-blue-500 ring-blue-50"}`}></span>
+                    <span className={`absolute -left-[21px] top-2.5 h-3 w-3 rounded-full border-2 border-white ring-4 ring-white ${isHoliday ? "bg-rose-500 ring-rose-50" : "bg-blue-500 ring-blue-50"}`}></span>
                     <div className="space-y-1">
-                      <p className={`text-xs font-bold ${isHoliday ? "text-rose-600 bg-rose-50 px-2 py-0.5 rounded w-max" : "text-blue-700 bg-blue-50 px-2 py-0.5 rounded w-max"}`}>
+                      <p className={`text-sm font-bold ${isHoliday ? "text-rose-600 bg-rose-50 px-2 py-0.5 rounded w-max" : "text-blue-700 bg-blue-50 px-2 py-0.5 rounded w-max"}`}>
                         {dateHeader}
                       </p>
-                      <p className="text-sm font-medium text-slate-700 leading-relaxed">
+                      <p className="text-base font-semibold text-slate-700 leading-relaxed">
                         {details || event}
                       </p>
                     </div>
@@ -314,7 +392,7 @@ export default function Home() {
                 );
               })}
               {events.length === 0 && (
-                <div className="text-sm text-slate-600 space-y-2">
+                <div className="text-base text-slate-600 space-y-2">
                   {lines.map((line, idx) => (
                     <p key={idx}>{line}</p>
                   ))}
@@ -329,22 +407,24 @@ export default function Home() {
       case "canteen_menu": {
         const lines = getLines(dashboardData.data);
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <Utensils className="h-4 w-4 text-amber-500" /> Canteen Menu Items (In Budget)
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <Utensils className="h-6 w-6 text-amber-500" /> Canteen Menu Items (In Budget)
+              </h4>
+            </div>
             <div className="divide-y divide-slate-100">
               {lines.map((item: string, idx: number) => {
                 const parts = item.split(" - ");
                 return (
-                  <div key={idx} className="flex justify-between py-3">
-                    <span className="text-sm font-medium text-slate-700">{parts[0]}</span>
-                    <span className="text-sm font-semibold text-indigo-600">{parts[1] || ""}</span>
+                  <div key={idx} className="flex justify-between py-4">
+                    <span className="text-base font-medium text-slate-700">{parts[0]}</span>
+                    <span className="text-base font-bold text-indigo-600">{parts[1] || ""}</span>
                   </div>
                 );
               })}
               {lines.length === 0 && (
-                <p className="text-sm text-slate-500 py-2">No items found within the specified budget.</p>
+                <p className="text-base text-slate-500 py-2">No items found within the specified budget.</p>
               )}
             </div>
           </div>
@@ -354,12 +434,14 @@ export default function Home() {
       case "daily_schedule": {
         const lines = getLines(dashboardData.data);
         const classes = lines.filter((item: string) => item.includes("⏰"));
-        
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <GraduationCap className="h-4 w-4 text-blue-500" /> Daily Schedule & Classes
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <GraduationCap className="h-6 w-6 text-blue-500" /> Daily Schedule & Classes
+              </h4>
+            </div>
             <div className="space-y-4">
               {classes.length > 0 ? (
                 classes.map((item: string, idx: number) => {
@@ -367,12 +449,12 @@ export default function Home() {
                   const parts = clean.split(" | ");
                   return (
                     <div key={idx} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 items-start">
-                      <div className="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-xs font-bold shrink-0">
+                      <div className="px-3 py-1 rounded bg-blue-100 text-blue-700 text-sm font-bold shrink-0">
                         {parts[0]}
                       </div>
                       <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-800">{parts[1]}</p>
-                        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500">
+                        <p className="text-base font-bold text-slate-800">{parts[1]}</p>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-slate-500">
                           <span>{parts[2]}</span>
                           <span>•</span>
                           <span>{parts[3]}</span>
@@ -384,7 +466,7 @@ export default function Home() {
                   );
                 })
               ) : (
-                <div className="text-sm text-slate-600 space-y-2">
+                <div className="text-base text-slate-600 space-y-2">
                   {lines.map((line, idx) => (
                     <p key={idx}>{line}</p>
                   ))}
@@ -399,12 +481,14 @@ export default function Home() {
       case "events_list": {
         const lines = getLines(dashboardData.data);
         const eventItems = lines.filter((item: string) => item.includes("🎯"));
-        
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-rose-500" /> Thomso Festival Search Results
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <Calendar className="h-6 w-6 text-rose-500" /> Thomso Festival Search Results
+              </h4>
+            </div>
             <div className="space-y-3">
               {eventItems.map((item: string, idx: number) => {
                 const clean = item.replace(/🎯\s*\[Score:\s*[\d.]+\]\s*/, "");
@@ -412,23 +496,23 @@ export default function Home() {
                 return (
                   <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full">
+                      <span className="text-xs uppercase font-bold text-rose-600 bg-rose-50 px-2.5 py-0.5 rounded-full">
                         {parts[0]}
                       </span>
-                      <h5 className="font-bold text-slate-800 text-sm mt-1.5">{parts[1]}</h5>
-                      <div className="flex gap-3 text-xs text-slate-400 mt-1">
-                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {parts[2]?.replace("Time: ", "")}</span>
-                        <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {parts[3]?.replace("Venue: ", "")}</span>
+                      <h5 className="font-bold text-slate-800 text-base mt-2">{parts[1]}</h5>
+                      <div className="flex gap-3 text-sm text-slate-400 mt-1">
+                        <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {parts[2]?.replace("Time: ", "")}</span>
+                        <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {parts[3]?.replace("Venue: ", "")}</span>
                       </div>
                     </div>
-                    <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                    <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
                       {parts[4]?.replace("Category: ", "")}
                     </span>
                   </div>
                 );
               })}
               {eventItems.length === 0 && (
-                <div className="text-sm text-slate-600 space-y-2">
+                <div className="text-base text-slate-600 space-y-2">
                   {lines.map((line, idx) => (
                     <p key={idx}>{line}</p>
                   ))}
@@ -443,30 +527,34 @@ export default function Home() {
       case "electronic_resources":
       case "tbls_textbooks": {
         const isArray = Array.isArray(dashboardData.data);
-        const books = isArray ? dashboardData.data : getLines(dashboardData.data);
-        
+        const books = isArray 
+          ? dashboardData.data 
+          : (dashboardData.data && typeof dashboardData.data === "object" ? [dashboardData.data] : getLines(dashboardData.data));
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-cyan-500" /> Library Resources & Textbooks
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-cyan-500" /> Library Resources & Textbooks
+              </h4>
+            </div>
             <div className="divide-y divide-slate-100">
               {books.map((book: any, idx: number) => {
                 if (typeof book === "string") {
                   return (
-                    <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
-                      <p className="text-sm font-medium text-slate-700">{book}</p>
+                    <div key={idx} className="py-4 first:pt-0 last:pb-0">
+                      <p className="text-base font-semibold text-slate-700">{book}</p>
                     </div>
                   );
                 }
                 return (
-                  <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
-                    <p className="text-sm font-bold text-slate-800">{book.title || book.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                  <div key={idx} className="py-4 first:pt-0 last:pb-0">
+                    <p className="text-base font-bold text-slate-800">{book.title || book.name}</p>
+                    <p className="text-sm text-slate-500 mt-1">
                       {book.author && `Author: ${book.author}`}
                       {book.edition && ` | Edition: ${book.edition}`}
                       {book.url && (
-                        <a href={book.url} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline block mt-1">
+                        <a href={book.url} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline block mt-1 font-semibold">
                           Access Resource
                         </a>
                       )}
@@ -475,7 +563,7 @@ export default function Home() {
                 );
               })}
               {books.length === 0 && (
-                <p className="text-sm text-slate-500 py-2">No textbooks or resources found.</p>
+                <p className="text-base text-slate-500 py-2">No textbooks or resources found.</p>
               )}
             </div>
           </div>
@@ -484,11 +572,13 @@ export default function Home() {
 
       case "library_facility":
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-cyan-500" /> Library Facility Location
-            </h4>
-            <div className="prose prose-slate text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-cyan-500" /> Library Facility Location
+              </h4>
+            </div>
+            <div className="prose prose-slate text-base text-slate-600 leading-relaxed whitespace-pre-line">
               {typeof dashboardData.data === "string" ? dashboardData.data : JSON.stringify(dashboardData.data)}
             </div>
           </div>
@@ -496,31 +586,35 @@ export default function Home() {
 
       case "library_guidelines": {
         const isArray = Array.isArray(dashboardData.data);
-        const guidelines = isArray ? dashboardData.data : [];
-        
+        const guidelines = isArray 
+          ? dashboardData.data 
+          : (dashboardData.data && typeof dashboardData.data === "object" ? [dashboardData.data] : []);
+
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-cyan-500" /> MGCL Library Policy & FAQs
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-cyan-500" /> MGCL Library Policy & FAQs
+              </h4>
+            </div>
             <div className="space-y-4">
               {guidelines.map((g: any, idx: number) => (
-                <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50">
-                  <span className="text-[10px] uppercase font-bold text-cyan-600 bg-cyan-50 px-2 py-0.5 rounded-full">
+                <div key={idx} className="p-5 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <span className="text-xs uppercase font-bold text-cyan-600 bg-cyan-50 px-2.5 py-1 rounded-full">
                     Source: {g.source || "Library Guidelines"}
                   </span>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  <p className="text-base text-slate-600 mt-3 leading-relaxed font-medium">
                     {g.text}
                   </p>
                 </div>
               ))}
               {!isArray && typeof dashboardData.data === "string" && (
-                <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                <p className="text-base text-slate-650 leading-relaxed whitespace-pre-line font-medium">
                   {dashboardData.data}
                 </p>
               )}
               {guidelines.length === 0 && !dashboardData.data && (
-                <p className="text-sm text-slate-500 py-2">No library guidelines match the query.</p>
+                <p className="text-base text-slate-500 py-2">No library guidelines match the query.</p>
               )}
             </div>
           </div>
@@ -529,38 +623,42 @@ export default function Home() {
 
       case "library_staff": {
         const isArray = Array.isArray(dashboardData.data);
-        const staff = isArray ? dashboardData.data : [];
+        const staff = isArray 
+          ? dashboardData.data 
+          : (dashboardData.data && typeof dashboardData.data === "object" ? [dashboardData.data] : []);
 
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-cyan-500" /> Library Staff Contacts
-            </h4>
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-cyan-500" /> Library Staff Contacts
+              </h4>
+            </div>
             <div className="grid grid-cols-1 gap-4">
               {staff.map((s: any, idx: number) => (
-                <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
+                <div key={idx} className="p-5 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
                   <div>
-                    <p className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                      <User className="h-4 w-4 text-slate-400" /> {s.name}
+                    <p className="text-base font-bold text-slate-800 flex items-center gap-1.5">
+                      <User className="h-5 w-5 text-slate-400" /> {s.name}
                     </p>
-                    <p className="text-xs text-slate-500 mt-0.5">{s.designation}</p>
+                    <p className="text-sm text-slate-500 mt-1">{s.designation}</p>
                   </div>
-                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs text-indigo-600">
+                  <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3.5 text-sm text-indigo-650">
                     {s.emails?.map((email: string, i: number) => (
-                      <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline">
-                        <Mail className="h-3 w-3" /> {email}
+                      <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline font-semibold">
+                        <Mail className="h-4 w-4" /> {email}
                       </a>
                     ))}
                     {s.phones?.map((phone: string, i: number) => (
                       <span key={i} className="flex items-center gap-1 text-slate-500">
-                        <Phone className="h-3 w-3" /> {phone}
+                        <Phone className="h-4 w-4" /> {phone}
                       </span>
                     ))}
                   </div>
                 </div>
               ))}
               {!isArray && (
-                <p className="text-xs text-slate-600 whitespace-pre-line">{dashboardData.data}</p>
+                <p className="text-base text-slate-600 whitespace-pre-line">{dashboardData.data}</p>
               )}
             </div>
           </div>
@@ -568,49 +666,57 @@ export default function Home() {
       }
 
       case "textbook_or_staff_details": {
-        const textbooks = dashboardData.data?.textbooks || [];
-        const staff = dashboardData.data?.staff || [];
-        
+        const textbooks = Array.isArray(dashboardData.data?.textbooks)
+          ? dashboardData.data.textbooks
+          : (dashboardData.data?.textbooks && typeof dashboardData.data.textbooks === "object" ? [dashboardData.data.textbooks] : []);
+        const staff = Array.isArray(dashboardData.data?.staff)
+          ? dashboardData.data.staff
+          : (dashboardData.data?.staff && typeof dashboardData.data.staff === "object" ? [dashboardData.data.staff] : []);
+
         return (
           <div className="space-y-6">
             {textbooks.length > 0 && (
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-cyan-500" /> Textbook Results
-                </h4>
+              <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+                <div className="border-b border-slate-100 pb-4">
+                  <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <BookOpen className="h-6 w-6 text-cyan-500" /> Textbook Results
+                  </h4>
+                </div>
                 <div className="divide-y divide-slate-100">
                   {textbooks.map((book: any, idx: number) => (
-                    <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
-                      <p className="text-sm font-bold text-slate-800">{book.title || book.name}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">Author: {book.author} | Edition: {book.edition}</p>
+                    <div key={idx} className="py-4 first:pt-0 last:pb-0">
+                      <p className="text-base font-bold text-slate-850">{book.title || book.name}</p>
+                      <p className="text-sm text-slate-500 mt-1">Author: {book.author} | Edition: {book.edition}</p>
                     </div>
                   ))}
                 </div>
               </div>
             )}
             {staff.length > 0 && (
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-cyan-500" /> Staff Directory
-                </h4>
+              <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+                <div className="border-b border-slate-100 pb-4">
+                  <h4 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                    <BookOpen className="h-6 w-6 text-cyan-500" /> Staff Directory
+                  </h4>
+                </div>
                 <div className="grid grid-cols-1 gap-4">
                   {staff.map((s: any, idx: number) => (
-                    <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
+                    <div key={idx} className="p-5 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
                       <div>
-                        <p className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                          <User className="h-4 w-4 text-slate-400" /> {s.name}
+                        <p className="text-base font-bold text-slate-800 flex items-center gap-1.5">
+                          <User className="h-5 w-5 text-slate-450" /> {s.name}
                         </p>
-                        <p className="text-xs text-slate-500 mt-0.5">{s.designation}</p>
+                        <p className="text-sm text-slate-500 mt-1">{s.designation}</p>
                       </div>
-                      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs text-indigo-600">
+                      <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3.5 text-sm text-indigo-650">
                         {s.emails?.map((email: string, i: number) => (
-                          <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline">
-                            <Mail className="h-3 w-3" /> {email}
+                          <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline font-semibold">
+                            <Mail className="h-4 w-4" /> {email}
                           </a>
                         ))}
                         {s.phones?.map((phone: string, i: number) => (
                           <span key={i} className="flex items-center gap-1 text-slate-500">
-                            <Phone className="h-3 w-3" /> {phone}
+                            <Phone className="h-4 w-4" /> {phone}
                           </span>
                         ))}
                       </div>
@@ -620,9 +726,11 @@ export default function Home() {
               </div>
             )}
             {textbooks.length === 0 && staff.length === 0 && (
-              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Response Data</h4>
-                <pre className="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl overflow-x-auto">
+              <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+                <div className="border-b border-slate-100 pb-4">
+                  <h4 className="text-2xl font-bold text-slate-800">Response Data</h4>
+                </div>
+                <pre className="text-sm text-slate-600 bg-slate-50 p-5 rounded-xl overflow-x-auto">
                   {JSON.stringify(dashboardData.data, null, 2)}
                 </pre>
               </div>
@@ -633,11 +741,13 @@ export default function Home() {
 
       default:
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
-              Response Data ({dashboardData.type})
-            </h4>
-            <pre className="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl overflow-x-auto">
+          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-2xl font-bold text-slate-800">
+                Response Data ({dashboardData.type})
+              </h4>
+            </div>
+            <pre className="text-sm text-slate-600 bg-slate-50 p-5 rounded-xl overflow-x-auto">
               {JSON.stringify(dashboardData.data, null, 2)}
             </pre>
           </div>
@@ -646,7 +756,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 font-sans">
+    <div className="flex h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 font-sans relative">
       {/* LEFT/CENTER: DASHBOARD WORKSPACE */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Top Navbar */}
@@ -656,26 +766,23 @@ export default function Home() {
               <Activity className="h-4 w-4" />
             </span>
             <div>
-              <h1 className="text-sm font-bold tracking-tight text-slate-900">IITR Campus Intelligence</h1>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Dashboard Workspace</p>
+              <h1 className="text-lg font-bold tracking-tight text-slate-900">IITR Campus Intelligence</h1>
+              <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Dashboard Workspace</p>
             </div>
           </div>
 
-          {/* <div className="flex items-center gap-3">
-            <div className="flex gap-2 items-center text-xs">
-              <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
-              <span className="text-slate-500 font-medium hidden sm:inline">MCP Core Connection Active</span>
-            </div>
-            {isSimulated && (
-              <span className="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200/60 px-2 py-0.5 rounded-full">
-                Simulated API
-              </span>
-            )}
-          </div> */}
+          {/* Mobile Chat Toggle Button */}
+          <button
+            onClick={() => setIsMobileChatOpen(true)}
+            className="md:hidden flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-slate-650 hover:text-slate-800 bg-indigo-50/50 hover:bg-indigo-50 border border-indigo-100 rounded-xl transition-all duration-200 cursor-pointer"
+          >
+            <Bot className="h-4 w-4 text-indigo-600" />
+            <span>Open Brain</span>
+          </button>
         </header>
 
         {/* Dynamic Canvas Workspace */}
-        <main className="flex-1 overflow-y-auto p-8 max-w-4xl w-full mx-auto space-y-6">
+        <main className="flex-1 overflow-y-auto p-8 w-full space-y-6">
           {dashboardData ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
@@ -703,29 +810,230 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Minimal Services Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-                {mcpServices.map((svc, i) => {
-                  const Icon = svc.icon;
-                  return (
-                    <div
-                      key={i}
-                      className="p-5 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-300 transition-all duration-200 flex items-start gap-4"
-                    >
-                      <span className={`p-2.5 rounded-xl shrink-0 ${svc.color}`}>
-                        <Icon className="h-5 w-5" />
+              {/* Active Hub Widgets */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 w-full px-4">
+                {/* Academics Card */}
+                <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow space-y-6 flex flex-col h-full justify-between lg:col-span-3">
+                  <div>
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-4">
+                      <h4 className="text-2xl font-bold tracking-tight text-slate-800 flex items-center gap-2">
+                        <GraduationCap className="h-6 w-6 text-blue-500" /> Academics Hub
+                      </h4>
+                      <span className="text-sm font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                        {(() => {
+                          const weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                          return weekdayNames[new Date().getDay()];
+                        })()}
                       </span>
-                      <div className="space-y-1">
-                        <h4 className="text-sm font-bold text-slate-900">{svc.name}</h4>
-                        <p className="text-xs text-slate-500 leading-relaxed">{svc.description}</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {/* Timetable schedule (Left column) */}
+                      <div className="space-y-4">
+                        <h5 className="text-base font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                          <Clock className="h-5 w-5 text-slate-400" /> Today's Schedule
+                        </h5>
+                        <div className="space-y-4 pr-1">
+                          {initData?.academics?.timetable && initData.academics.timetable.length > 0 ? (
+                            initData.academics.timetable.map((cls: any, i: number) => (
+                              <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col gap-2 hover:border-blue-200 transition-colors">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                                    {cls.course_code}
+                                  </span>
+                                  <span className="text-xs font-medium text-slate-400">
+                                    {cls.time}
+                                  </span>
+                                </div>
+                                <p className="text-base font-bold text-slate-800 line-clamp-1">{cls.course_name || "Course Session"}</p>
+                                <div className="flex justify-between items-center text-xs text-slate-500">
+                                  <span className="flex items-center gap-1"><MapPin className="h-4 w-4 shrink-0" /> {cls.room_no}</span>
+                                  <span className="font-medium">{cls.professor?.split(',')[0]}</span>
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="py-6 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-xl">
+                              No classes scheduled today. ☕
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Calendar deadlines (Right column) */}
+                      <div className="space-y-4">
+                        <h5 className="text-base font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
+                          <Calendar className="h-5 w-5 text-slate-400" /> Deadlines & Events
+                        </h5>
+                        <div className="space-y-4 pr-1">
+                          {(() => {
+                            const cal = initData?.academics?.calendar;
+                            const hasHolidays = cal?.official_holidays && cal.official_holidays.length > 0;
+                            const hasRescheduling = cal?.time_table_rescheduling && cal.time_table_rescheduling.length > 0;
+                            const hasSchedule = cal?.chronological_schedule && cal.chronological_schedule.length > 0;
+
+                            if (hasHolidays || hasRescheduling || hasSchedule) {
+                              return (
+                                <>
+                                  {cal.official_holidays?.map((h: any, i: number) => (
+                                    <div key={`h-${i}`} className="p-4 rounded-xl bg-rose-50 border border-rose-100 flex items-start gap-3">
+                                      <span className="p-1.5 bg-rose-100 text-rose-600 rounded shrink-0">
+                                        <Sparkles className="h-4 w-4" />
+                                      </span>
+                                      <div>
+                                        <p className="text-sm font-bold text-rose-800">🎉 Holiday: {h.name}</p>
+                                        <p className="text-xs text-rose-600 font-medium mt-0.5">{h.date} ({h.day})</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                  {cal.time_table_rescheduling?.map((r: any, i: number) => (
+                                    <div key={`r-${i}`} className="p-4 rounded-xl bg-amber-50 border border-amber-100 flex items-start gap-3">
+                                      <span className="p-1.5 bg-amber-100 text-amber-700 rounded shrink-0">
+                                        <AlertCircle className="h-4 w-4" />
+                                      </span>
+                                      <div>
+                                        <p className="text-sm font-bold text-amber-800">⚠️ Rescheduled Day</p>
+                                        <p className="text-xs text-amber-700 font-medium mt-0.5">Today follows timetable of {r.follows_timetable_of}</p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                  {cal.chronological_schedule?.map((s: any, i: number) => (
+                                    <div key={`s-${i}`} className="p-4 rounded-xl bg-blue-50/50 border border-blue-100 flex items-start gap-3">
+                                      <span className="p-1.5 bg-blue-100 text-blue-600 rounded shrink-0">
+                                        <Calendar className="h-4 w-4" />
+                                      </span>
+                                      <div>
+                                        <p className="text-sm font-bold text-blue-800">{s.details}</p>
+                                        <p className="text-xs text-blue-600 font-medium mt-0.5">
+                                          {s.start_date === s.end_date ? s.start_date : `${s.start_date} to ${s.end_date}`}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </>
+                              );
+                            } else {
+                              return (
+                                <div className="p-6 md:p-8 rounded-xl bg-emerald-50/50 border border-emerald-100 flex flex-col items-center justify-center text-center gap-3">
+                                  <CheckCircle2 className="h-8 w-8 text-emerald-500" />
+                                  <div>
+                                    <p className="text-sm font-bold text-emerald-800">All Clear Today</p>
+                                    <p className="text-xs text-emerald-600 font-medium mt-0.5">No holidays, rescheduled sessions, or calendar deadlines scheduled for today.</p>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          })()}
+                        </div>
                       </div>
                     </div>
-                  );
-                })}
+                  </div>
+                </div>
+
+                {/* Mess Card */}
+                <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full justify-between lg:col-span-2">
+                  <div>
+                    <div className="flex justify-between items-center border-b border-slate-100 pb-4 mb-4">
+                      <h4 className="text-xl font-bold tracking-tight text-slate-800 flex items-center gap-2">
+                        <Utensils className="h-6 w-6 text-amber-500" /> Daily Mess Menu
+                      </h4>
+                      <span className="text-sm font-bold text-slate-400 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                        Jawahar Bhawan
+                      </span>
+                    </div>
+
+                    {/* Meal Selector Tabs */}
+                    <div className="flex gap-2 p-1 bg-slate-100 rounded-xl mb-6">
+                      {["breakfast", "lunch", "dinner"].map((meal) => (
+                        <button
+                          key={meal}
+                          onClick={() => setActiveMealView(meal)}
+                          className={`flex-1 py-2 px-3 text-sm font-bold rounded-lg capitalize transition-all cursor-pointer ${activeMealView === meal
+                              ? "bg-white text-slate-800 shadow-sm"
+                              : "text-slate-400 hover:text-slate-600"
+                            }`}
+                        >
+                          {meal}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="space-y-4">
+                      {/* Breakfast Magnified */}
+                      {activeMealView === "breakfast" && (() => {
+                        const menu = initData?.ui_data?.data?.breakfast || ["Masala Oats", "Banana", "Boiled Egg", "Milk/Tea"];
+                        const isSystemActive = initData?.ui_data?.data?.active_meal === "breakfast";
+                        return (
+                          <div className="p-8 md:p-10 rounded-2xl border transition-all duration-300 scale-100 bg-amber-50/60 border-amber-300 ring-2 ring-amber-300/20 shadow-md">
+                            <div className="flex justify-between items-center mb-4">
+                              <h5 className="text-base font-extrabold text-amber-800 uppercase tracking-wider bg-amber-100/60 px-3 py-1 rounded">
+                                Breakfast
+                              </h5>
+                              {isSystemActive && (
+                                <span className="flex items-center gap-1 text-xs font-extrabold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+                                  Current Meal
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm md:text-md font-bold text-slate-850 leading-relaxed">
+                              {Array.isArray(menu) ? menu.join(", ") : menu}
+                            </p>
+                          </div>
+                        );
+                      })()}
+
+                      {/* Lunch Magnified */}
+                      {activeMealView === "lunch" && (() => {
+                        const menu = initData?.ui_data?.data?.lunch || ["Kadhai Paneer", "Dal Makhani", "Jeera Rice", "Roti", "Raita", "Salad"];
+                        const isSystemActive = initData?.ui_data?.data?.active_meal === "lunch";
+                        return (
+                          <div className="p-8 md:p-10 rounded-2xl border transition-all duration-300 scale-100 bg-indigo-50/60 border-indigo-300 ring-2 ring-indigo-300/20 shadow-md">
+                            <div className="flex justify-between items-center mb-4">
+                              <h5 className="text-base font-extrabold text-indigo-800 uppercase tracking-wider bg-indigo-100/60 px-3 py-1 rounded">
+                                Lunch
+                              </h5>
+                              {isSystemActive && (
+                                <span className="flex items-center gap-1 text-xs font-extrabold text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+                                  Current Meal
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm md:text-md font-bold text-slate-850 leading-relaxed">
+                              {Array.isArray(menu) ? menu.join(", ") : menu}
+                            </p>
+                          </div>
+                        );
+                      })()}
+
+                      {/* Dinner Magnified */}
+                      {activeMealView === "dinner" && (() => {
+                        const menu = initData?.ui_data?.data?.dinner || ["Chana Masala", "Aloo Matar", "Palak Puri", "Rice", "Rice Kheer"];
+                        const isSystemActive = initData?.ui_data?.data?.active_meal === "dinner";
+                        return (
+                          <div className="p-8 md:p-10 rounded-2xl border transition-all duration-300 scale-100 bg-emerald-50/60 border-emerald-300 ring-2 ring-emerald-300/20 shadow-md">
+                            <div className="flex justify-between items-center mb-4">
+                              <h5 className="text-base font-extrabold text-emerald-800 uppercase tracking-wider bg-emerald-100/60 px-3 py-1 rounded">
+                                Dinner
+                              </h5>
+                              {isSystemActive && (
+                                <span className="flex items-center gap-1 text-xs font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">
+                                  Current Meal
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-sm md:text-md font-bold text-slate-850 leading-relaxed">
+                              {Array.isArray(menu) ? menu.join(", ") : menu}
+                            </p>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Minimal Suggestion Prompts */}
-              <div className="space-y-3 max-w-xl mx-auto">
+              {/* <div className="space-y-3 max-w-xl mx-auto">
                 <p className="text-xs text-center font-bold text-slate-400 uppercase tracking-wider">Suggested Queries</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {[
@@ -743,14 +1051,26 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
           )}
         </main>
       </div>
 
+      {/* Backdrop for mobile drawer */}
+      {isMobileChatOpen && (
+        <div
+          onClick={() => setIsMobileChatOpen(false)}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden"
+        />
+      )}
+
       {/* RIGHT: AI ASSISTANT PANEL */}
-      <aside className="w-96 border-l border-slate-200 bg-white flex flex-col h-full shrink-0 shadow-lg shadow-slate-100/30">
+      <aside className={`
+        fixed inset-y-0 right-0 z-50 w-full max-w-sm border-l border-slate-200 bg-white flex flex-col h-full shadow-2xl transition-transform duration-300 transform
+        ${isMobileChatOpen ? "translate-x-0" : "translate-x-full"}
+        md:relative md:translate-x-0 md:w-96 md:h-full md:shadow-lg md:shadow-slate-100/30 md:z-auto md:flex shrink-0
+      `}>
         {/* Header: A simple container displaying an avatar icon and title */}
         <div className="h-16 border-b border-slate-200/80 flex items-center justify-between px-4 bg-slate-50/50 shrink-0">
           <div className="flex items-center gap-2.5">
@@ -758,7 +1078,7 @@ export default function Home() {
               <Bot className="h-4 w-4" />
             </span>
             <div>
-              <h2 className="text-xs font-bold text-slate-900 flex items-center gap-1">
+              <h2 className="text-md font-bold text-slate-900 flex items-center gap-1">
                 Campus Intelligence Brain
               </h2>
               <p className="text-[9px] text-slate-400 font-semibold tracking-wider uppercase flex items-center gap-1">
@@ -767,9 +1087,17 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <span className="text-xs text-slate-400 hover:text-slate-600 cursor-pointer p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
-            <Sparkles className="h-4 w-4 text-indigo-600" />
-          </span>
+          <div className="flex items-center gap-1">
+            <span className="text-xs text-slate-400 hover:text-slate-600 cursor-pointer p-1.5 hover:bg-slate-100 rounded-lg transition-colors">
+              <Sparkles className="h-4 w-4 text-indigo-600" />
+            </span>
+            <button
+              onClick={() => setIsMobileChatOpen(false)}
+              className="md:hidden p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg cursor-pointer"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         {/* Message Timeline: A scrollable middle pane */}
@@ -777,22 +1105,26 @@ export default function Home() {
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`flex flex-col max-w-[85%] ${
-                msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
-              }`}
+              className={`flex flex-col max-w-[85%] ${msg.sender === "user" ? "ml-auto items-end" : "mr-auto items-start"
+                }`}
             >
               <div
-                className={`p-3 rounded-2xl text-xs leading-relaxed shadow-sm ${
-                  msg.sender === "user"
+                className={`p-3 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.sender === "user"
                     ? "bg-slate-600 text-white rounded-tr-none"
                     : "bg-white border border-slate-200/60 text-slate-800 rounded-tl-none"
-                }`}
+                  }`}
               >
                 {msg.isLoading ? (
                   <div className="flex gap-1 items-center py-1">
                     <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
                     <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
                     <span className="h-1.5 w-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
+                  </div>
+                ) : msg.sender === "ai" ? (
+                  <div className="prose prose-sm max-w-none text-slate-800 leading-relaxed">
+                    <ReactMarkdown>
+                      {msg.text}
+                    </ReactMarkdown>
                   </div>
                 ) : (
                   msg.text

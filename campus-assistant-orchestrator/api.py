@@ -102,8 +102,10 @@ def extract_tool_data(tool_result) -> Any:
         if text_val:
             try:
                 parsed = json.loads(text_val)
-                if isinstance(parsed, (list, dict)):
+                # If a single block already contains a list, return it immediately
+                if isinstance(parsed, list):
                     return parsed
+                # Otherwise, accumulate the parsed dict/value
                 data_list.append(parsed)
             except (json.JSONDecodeError, TypeError):
                 data_list.append(text_val)
