@@ -1,0 +1,259 @@
+{
+  "festival": "Thomso'26",
+  "theme": "A Crossroad of Cultures",
+  "day": "Day 2",
+  "dates": "23rd - 25th October",
+  "associations": {
+    "in_association_with": [
+      "VISION IAS"
+    ],
+    "driven_by": "Hero"
+  },
+  "events": [
+    {
+      "event_name": "Footloose Prelims",
+      "time": "09:00 AM to 03:00 PM",
+      "venue": "Convocation Hall"
+    },
+    {
+      "event_name": "Mr and Ms Thomso Finals",
+      "time": "09:00 AM to 01:00 PM",
+      "venue": "MAC Audi"
+    },
+    {
+      "event_name": "Abhivyakti(prelims)",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "OP Jain"
+    },
+    {
+      "event_name": "LitFest - Literati",
+      "time": "09:00 AM to 01:00 PM",
+      "venue": "LHC 004"
+    },
+    {
+      "event_name": "Battle of Bands",
+      "time": "09:00 AM to 03:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Sargam(non group) Prelims",
+      "time": "09:00 AM to 12:30 PM",
+      "venue": "Biotech Audi"
+    },
+    {
+      "event_name": "Carnival",
+      "time": "09:00 AM to 03:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Apocalypse Valorant",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "New LHC 103"
+    },
+    {
+      "event_name": "Apocalypse Fifa",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "Student's Club"
+    },
+    {
+      "event_name": "Mark Sense",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "NEW LHC 003"
+    },
+    {
+      "event_name": "Krafton India mobile gaming tournament",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "New LHC 005"
+    },
+    {
+      "event_name": "Food stall",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "Hobbies Club"
+    },
+    {
+      "event_name": "Drishya",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "MAC OAT"
+    },
+    {
+      "event_name": "Photo Booth",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "MAC OAT"
+    },
+    {
+      "event_name": "Sargam Group finals",
+      "time": "09:30 AM to 01:30 PM",
+      "venue": "Chem audi"
+    },
+    {
+      "event_name": "MUN-SHIELD council",
+      "time": "09:30 AM to 04:30 PM",
+      "venue": "NEW LHC 001"
+    },
+    {
+      "event_name": "Paint Fiesta",
+      "time": "10:00 AM to 01:30 PM",
+      "venue": "LHC 101"
+    },
+    {
+      "event_name": "Seiger Finals",
+      "time": "10:00 AM to 07:30 PM",
+      "venue": "SBI Lawn"
+    },
+    {
+      "event_name": "Nukkad Natak Finals",
+      "time": "10:00 AM to 06:30 PM",
+      "venue": "Mech ground"
+    },
+    {
+      "event_name": "MUN (AIPPM)",
+      "time": "10:00 AM to 04:30 PM",
+      "venue": "Senate hall"
+    },
+    {
+      "event_name": "24 Frames",
+      "time": "10:00 AM to 03:30 PM",
+      "venue": "LHC 106"
+    },
+    {
+      "event_name": "Step Up Prelims",
+      "time": "10:00 AM to 06:30 PM",
+      "venue": "UG Floor"
+    },
+    {
+      "event_name": "Street Soccer",
+      "time": "10:00 AM to 06:30 PM",
+      "venue": "Football Ground"
+    },
+    {
+      "event_name": "MUN-UNGA",
+      "time": "10:00 AM to 04:30 PM",
+      "venue": "NEW LHC 004"
+    },
+    {
+      "event_name": "Paint Fiesta",
+      "time": "10:00 AM to 01:30 PM",
+      "venue": "LHC 101"
+    },
+    {
+      "event_name": "Snooker's Elite",
+      "time": "10:00 AM to 04:00 PM",
+      "venue": "Student's Club"
+    },
+    {
+      "event_name": "Scavenger Hunt",
+      "time": "10:00 AM to 02:00 PM",
+      "venue": "Library Steps"
+    },
+    {
+      "event_name": "Auction Frenzy",
+      "time": "10:30 AM to 06:30 PM",
+      "venue": "LHC 005"
+    },
+    {
+      "event_name": "Telesporcle prelims and finals",
+      "time": "11:00 AM to 04:30 PM",
+      "venue": "LHC 103"
+    },
+    {
+      "event_name": "Quirosity INDIA Quiz",
+      "time": "11:00 AM to 01:30 PM",
+      "venue": "LHC 104"
+    },
+    {
+      "event_name": "Litfest Nerdy bate",
+      "time": "11:00 AM to 02:30 PM",
+      "venue": "LHC 003"
+    },
+    {
+      "event_name": "Sketching Workshop",
+      "time": "12:00 PM to 02:00 PM",
+      "venue": "MAC AUDI"
+    },
+    {
+      "event_name": "Youtube Fanconnect",
+      "time": "01:00 PM to 02:00 PM",
+      "venue": "Chem audi"
+    },
+    {
+      "event_name": "Mimicry",
+      "time": "01:30 PM to 04:00 PM",
+      "venue": "LHC ATR"
+    },
+    {
+      "event_name": "Monologue",
+      "time": "01:30 PM to 05:30 PM",
+      "venue": "Biotech Audi"
+    },
+    {
+      "event_name": "Costume Design",
+      "time": "01:30 PM to 06:30 PM",
+      "venue": "NEW LHC 002"
+    },
+    {
+      "event_name": "Titan showdown Finals",
+      "time": "02:00 PM to 03:00 PM",
+      "venue": "MAC AUDI"
+    },
+    {
+      "event_name": "Food Fiesta(Finals)",
+      "time": "02:00 PM to 04:30 PM",
+      "venue": "SAC Hall"
+    },
+    {
+      "event_name": "Litfest Pictionary",
+      "time": "02:30 PM to 04:30 PM",
+      "venue": "LHC 104"
+    },
+    {
+      "event_name": "Sargam non group finals",
+      "time": "03:00 PM to 06:30 PM",
+      "venue": "MAC AUDI"
+    },
+    {
+      "event_name": "War of DJs",
+      "time": "03:00 PM to 06:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Social Tape EVENT",
+      "time": "04:00 PM to 06:30 PM",
+      "venue": "Chem audi"
+    },
+    {
+      "event_name": "Campus Diva",
+      "time": "03:00 PM to 06:30 PM",
+      "venue": "Convocation Hall"
+    },
+    {
+      "event_name": "Video Editing",
+      "time": "04:00 PM to 06:00 PM",
+      "venue": "LHC 004"
+    },
+    {
+      "event_name": "Queen's Gambit",
+      "time": "04:00 PM to 06:30 PM",
+      "venue": "LHC 101"
+    },
+    {
+      "event_name": "MUN Prize",
+      "time": "04:30 PM to 06:30 PM",
+      "venue": "Senate hall"
+    },
+    {
+      "event_name": "BRIJ a.k.a Brijesh Ukey Performance",
+      "time": "06:00 PM to 07:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Silent DJ",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "SBI Lawn"
+    },
+    {
+      "event_name": "Thomso Karaoke",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "Swimming pool Oat"
+    }
+  ]
+}

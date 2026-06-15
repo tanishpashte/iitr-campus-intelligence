@@ -1,0 +1,304 @@
+{
+  "institution": "Indian Institute of Technology Roorkee",
+  "calendar_title": "ACADEMIC CALENDAR (AUTUMN SEMESTER 2026-27)",
+  "scope": "For All Programs (Other than MBA)",
+  "footnotes": {
+    "asterisk": "Subject to JoSAA Counseling",
+    "hash": "The final date will be notified in due course."
+  },
+  "chronological_schedule": [
+    {
+      "serial_no": 1,
+      "details": "Admission cum Academic Registration for new Ph.D. and Masters' students",
+      "start_date": "2026-07-14",
+      "end_date": "2026-07-14",
+      "days": ["Tuesday"]
+    },
+    {
+      "serial_no": 2,
+      "details": "Academic Registration for existing students in physical mode",
+      "start_date": "2026-07-14",
+      "end_date": "2026-07-15",
+      "days": ["Tuesday", "Wednesday"]
+    },
+    {
+      "serial_no": 3,
+      "details": "Orientation Program for new Ph.D. and Masters' students",
+      "start_date": "2026-07-15",
+      "end_date": "2026-07-15",
+      "days": ["Wednesday"]
+    },
+    {
+      "serial_no": 4,
+      "details": "Commencement of Classes (except UG I year)",
+      "start_date": "2026-07-16",
+      "end_date": "2026-07-16",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 5,
+      "details": "Re-examination and second examination (for Spring Semester 2025-26)",
+      "start_date": "2026-07-16",
+      "end_date": "2026-07-18",
+      "days": ["Thursday", "Friday", "Saturday"]
+    },
+    {
+      "serial_no": 6,
+      "details": "Academic Registration for new UG students *",
+      "start_date": "2026-07-24",
+      "end_date": "2026-07-24",
+      "days": ["Friday"]
+    },
+    {
+      "serial_no": 7,
+      "details": "Orientation Program - Newly Admitted UG Students",
+      "date_slots": [
+        { "start": "2026-07-25", "end": "2026-07-26" },
+        { "start": "2026-08-01", "end": "2026-08-02" }
+      ],
+      "days": ["Saturday", "Sunday"]
+    },
+    {
+      "serial_no": 8,
+      "details": "Commencement of Classes for UG I year *",
+      "start_date": "2026-07-27",
+      "end_date": "2026-07-27",
+      "days": ["Monday"]
+    },
+    {
+      "serial_no": 9,
+      "details": "Last date for Academic Registration with a late fine",
+      "start_date": "2026-07-31",
+      "end_date": "2026-07-31",
+      "days": ["Friday"]
+    },
+    {
+      "serial_no": 10,
+      "details": "Last date for adding/changing courses for all programs",
+      "start_date": "2026-08-03",
+      "end_date": "2026-08-03",
+      "days": ["Monday"]
+    },
+    {
+      "serial_no": 11,
+      "details": "Last date for submission of mandatory documents for newly admitted students",
+      "start_date": "2026-08-27",
+      "end_date": "2026-08-27",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 12,
+      "details": "Convocation 2026 #",
+      "tentative_dates": ["2026-09-19", "2026-09-26"],
+      "days": ["Saturday"]
+    },
+    {
+      "serial_no": 13,
+      "details": "Mid Term Examinations (except Sunday)",
+      "start_date": "2026-09-10",
+      "end_date": "2026-09-15",
+      "days": ["Thursday", "Friday", "Saturday", "Monday", "Tuesday"]
+    },
+    {
+      "serial_no": 14,
+      "details": "Last date for informing the students about performance in MTE and internal assessment",
+      "start_date": "2026-09-28",
+      "end_date": "2026-09-28",
+      "days": ["Monday"]
+    },
+    {
+      "serial_no": 15,
+      "details": "Submission of the feedback/response form - I on the online portal",
+      "start_date": "2026-09-28",
+      "end_date": "2026-10-01",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday"]
+    },
+    {
+      "serial_no": 16,
+      "details": "Sangram 2026",
+      "start_date": "2026-10-03",
+      "end_date": "2026-10-04",
+      "days": ["Saturday", "Sunday"]
+    },
+    {
+      "serial_no": 17,
+      "details": "Last date for withdrawal of courses",
+      "start_date": "2026-10-05",
+      "end_date": "2026-10-05",
+      "days": ["Monday"]
+    },
+    {
+      "serial_no": 18,
+      "details": "Thomso 2026",
+      "start_date": "2026-10-23",
+      "end_date": "2026-10-25",
+      "days": ["Friday", "Saturday", "Sunday"]
+    },
+    {
+      "serial_no": 19,
+      "details": "Submission of the feedback/response form - II on the online portal",
+      "start_date": "2026-11-05",
+      "end_date": "2026-11-11",
+      "days": ["Thursday", "Friday", "Saturday", "Monday", "Tuesday", "Wednesday"]
+    },
+    {
+      "serial_no": 20,
+      "details": "Last date of teaching",
+      "start_date": "2026-11-11",
+      "end_date": "2026-11-11",
+      "days": ["Wednesday"]
+    },
+    {
+      "serial_no": 21,
+      "details": "End Term Examinations (excluding Sunday and declared holidays)",
+      "start_date": "2026-11-13",
+      "end_date": "2026-11-24",
+      "days": ["Friday", "Saturday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Monday", "Tuesday"]
+    },
+    {
+      "serial_no": 22,
+      "details": "Institute Foundation Day",
+      "start_date": "2026-11-25",
+      "end_date": "2026-11-25",
+      "days": ["Wednesday"]
+    },
+    {
+      "serial_no": 23,
+      "details": "Last date of showing the End Term Examinations answer scripts",
+      "start_date": "2026-12-01",
+      "end_date": "2026-12-01",
+      "days": ["Tuesday"]
+    },
+    {
+      "serial_no": 24,
+      "details": "Last date of electronic communication of grades to students",
+      "start_date": "2026-12-03",
+      "end_date": "2026-12-03",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 25,
+      "details": "Last date for students to apply for grade revision, if any",
+      "start_date": "2026-12-04",
+      "end_date": "2026-12-04",
+      "days": ["Friday"]
+    },
+    {
+      "serial_no": 26,
+      "details": "Winter vacation for UG students (except IDD final Year)",
+      "start_date": "2026-12-05",
+      "end_date": "2027-01-06",
+      "days": ["Saturday", "Wednesday"]
+    },
+    {
+      "serial_no": 27,
+      "details": "Last date for the evaluation of Project/Thesis/Seminar for all programs",
+      "start_date": "2026-12-03",
+      "end_date": "2026-12-03",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 28,
+      "details": "Last date for sending final grades to AAO",
+      "start_date": "2026-12-08",
+      "end_date": "2026-12-08",
+      "days": ["Tuesday"]
+    },
+    {
+      "serial_no": 29,
+      "details": "Last date for the submission of Progress Reports (Ph.D. students) to the AAO",
+      "start_date": "2026-12-09",
+      "end_date": "2026-12-09",
+      "days": ["Wednesday"]
+    },
+    {
+      "serial_no": 30,
+      "details": "Online Choices for branch change",
+      "start_date": "2026-12-10",
+      "end_date": "2026-12-14",
+      "days": ["Thursday", "Monday"]
+    },
+    {
+      "serial_no": 31,
+      "details": "Declaration of the final list of branch change (Tentative Date)",
+      "start_date": "2026-12-31",
+      "end_date": "2026-12-31",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 32,
+      "details": "Admission cum Academic Registration for New Ph.D. Students",
+      "start_date": "2027-01-07",
+      "end_date": "2027-01-07",
+      "days": ["Thursday"]
+    },
+    {
+      "serial_no": 33,
+      "details": "Academic registration of all existing students for Spring Semester 2026-27 in physical mode",
+      "start_date": "2027-01-07",
+      "end_date": "2027-01-08",
+      "days": ["Thursday", "Friday"]
+    },
+    {
+      "serial_no": 34,
+      "details": "Commencement of classes for Spring Semester 2026-27",
+      "start_date": "2027-01-11",
+      "end_date": "2027-01-11",
+      "days": ["Monday"]
+    },
+    {
+      "serial_no": 35,
+      "details": "Re-examination and Second examination (for Autumn Semester 2026-27)",
+      "start_date": "2027-01-11",
+      "end_date": "2027-01-13",
+      "days": ["Monday", "Tuesday", "Wednesday"]
+    }
+  ],
+  "time_table_rescheduling": [
+    {
+      "rescheduled_date": "2026-09-23",
+      "day_of_week": "Wednesday",
+      "follows_timetable_of": "Friday"
+    },
+    {
+      "rescheduled_date": "2026-10-28",
+      "day_of_week": "Wednesday",
+      "follows_timetable_of": "Friday"
+    }
+  ],
+  "compensatory_classes_ug1_only": [
+    {
+      "date": "2026-08-01",
+      "day_of_week": "Saturday",
+      "follows_timetable_of": "Monday"
+    },
+    {
+      "date": "2026-08-08",
+      "day_of_week": "Saturday",
+      "follows_timetable_of": "Thursday"
+    },
+    {
+      "date": "2026-08-22",
+      "day_of_week": "Saturday",
+      "follows_timetable_of": "Friday"
+    },
+    {
+      "date": "2026-10-10",
+      "day_of_week": "Saturday",
+      "follows_timetable_of": "Friday"
+    }
+  ],
+  "official_holidays": [
+    { "name": "Independence Day", "date": "2026-08-15", "day": "Saturday" },
+    { "name": "Id-e-Milad (Prophet Mohammad's Birthday)", "date": "2026-08-26", "day": "Wednesday", "note": "Subject to moon visibility" },
+    { "name": "Raksha Bandhan", "date": "2026-08-28", "day": "Friday" },
+    { "name": "Janamashtami", "date": "2026-09-04", "day": "Friday" },
+    { "name": "Mahatma Gandhi's Birthday", "date": "2026-10-02", "day": "Friday" },
+    { "name": "Mahashtami", "date": "2026-10-19", "day": "Monday" },
+    { "name": "Mahanavmi/Dussehra (Vijaydashmi)", "date": "2026-10-20", "day": "Tuesday" },
+    { "name": "Diwali (Deepavali)", "date": "2026-11-08", "day": "Sunday" },
+    { "name": "Govardhan Puja", "date": "2026-11-09", "day": "Monday" },
+    { "name": "Guru Nanak's Birthday", "date": "2026-11-24", "day": "Tuesday" },
+    { "name": "Christmas Day", "date": "2026-12-25", "day": "Friday" }
+  ]
+}

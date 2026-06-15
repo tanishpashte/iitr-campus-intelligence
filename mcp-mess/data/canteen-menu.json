@@ -1,0 +1,119 @@
+{
+  "canteen_name": "Jawahar Bhawan Canteen",
+  "menu": {
+    "paratha": [
+      { "item": "Plain Paratha", "price_rs": 10 },
+      { "item": "Aloo Paratha", "price_rs": 15 },
+      { "item": "Aloo Pyaj Paratha", "price_rs": 15 },
+      { "item": "Gobi, Muli Paratha", "price_rs": 15 },
+      { "item": "Paneer Paratha", "price_rs": 25 },
+      { "item": "Cheese Paratha", "price_rs": 25 },
+      { "item": "Mix Paratha", "price_rs": 25 },
+      { "item": "Egg Paratha (1 Egg)", "price_rs": 20 },
+      { "item": "Double Egg Paratha (2 Egg)", "price_rs": 30 },
+      { "item": "Double Egg Roll", "price_rs": 40 },
+      { "item": "Double Egg Cheese Roll", "price_rs": 50 },
+      { "item": "Paneer Roll", "price_rs": 50 },
+      { "item": "Paneer Cheese Roll", "price_rs": 60 }
+    ],
+    "continental_items": [
+      { "item": "Fry Noodles Full", "price_rs": 30 },
+      { "item": "Chowmin Full", "price_rs": 30 },
+      { "item": "Egg Noodles", "price_rs": 35 },
+      { "item": "Egg Chowmin", "price_rs": 35 },
+      { "item": "Macroni Full", "price_rs": 30 },
+      { "item": "Spring Roll (Full)", "price_rs": 40 },
+      { "item": "Spring Roll (Half)", "price_rs": 20 },
+      { "item": "Veg Momos Full (12 pieces)", "price_rs": 60 },
+      { "item": "Veg Momos Half (6 pieces)", "price_rs": 30 },
+      { "item": "Veg Kabab Full", "price_rs": 40 },
+      { "item": "Paneer Momos Full (12 pieces)", "price_rs": 80 },
+      { "item": "Paneer Momos Half (6 pieces)", "price_rs": 40 },
+      { "item": "White Sauce Pasta", "price_rs": 40 },
+      { "item": "Red Sauce Pasta", "price_rs": 35 },
+      { "item": "Chilly Patato", "price_rs": 40 },
+      { "item": "Honey Chilly Patato", "price_rs": 50 },
+      { "item": "Bhelpuri", "price_rs": 25 }
+    ],
+    "sandwich": [
+      { "item": "Aloo Sandwich (2 slice)", "price_rs": 30 },
+      { "item": "Veg Sandwich (2 slice)", "price_rs": 35 },
+      { "item": "Paneer Sandwich (2 slice)", "price_rs": 40 },
+      { "item": "Cheese Grilled Sandwich (2 slice)", "price_rs": 40 }
+    ],
+    "fries": [
+      { "item": "Samosa", "price_rs": 7 },
+      { "item": "Bread Pakoda", "price_rs": 10 },
+      { "item": "Mix Pakoda (100 gram)", "price_rs": 30 },
+      { "item": "Paneer Pakoda (100 gram)", "price_rs": 40 },
+      { "item": "French Fries (100 gram)", "price_rs": 25 },
+      { "item": "Poha (Full plate)", "price_rs": 30 },
+      { "item": "Poha (Half plate)", "price_rs": 20 },
+      { "item": "Veg Patties", "price_rs": 15 },
+      { "item": "Masala Patties", "price_rs": 20 },
+      { "item": "Paneer Patties", "price_rs": 25 }
+    ],
+    "omlete_breads_and_bun_items": [
+      { "item": "Bread Butter", "price_rs": 15 },
+      { "item": "Bun butter", "price_rs": 15 },
+      { "item": "Plain Omlete (2 Eggs)", "price_rs": 20 },
+      { "item": "Bun Omlete (2 Eggs)", "price_rs": 30 },
+      { "item": "Bread Omlete (2 Eggs)", "price_rs": 25 },
+      { "item": "Full Fry (2 Eggs)", "price_rs": 25 },
+      { "item": "Half Fry (2 Eggs)", "price_rs": 25 },
+      { "item": "Egg Bhurji (2 Eggs)", "price_rs": 25 },
+      { "item": "French Toast", "price_rs": 25 },
+      { "item": "Bun Samosa", "price_rs": 15 },
+      { "item": "Vada pav", "price_rs": 20 },
+      { "item": "Veg Burger (Mac Di Tikki)", "price_rs": 30 },
+      { "item": "Cheese Burger (Mac Di Tikki)", "price_rs": 40 }
+    ],
+    "beverages": [
+      { "item": "Special Tea (Dhoodh Patti) (150ml)", "price_rs": 10 },
+      { "item": "Kulhad Tea (150ml)", "price_rs": 15 },
+      { "item": "Hot Coffee (200ml)", "price_rs": 20 },
+      { "item": "Hot Full Cream Milk (250ml)", "price_rs": 20 },
+      { "item": "Full Cream Bournvita Milk (250ml)", "price_rs": 25 },
+      { "item": "Cold Coffee (250ml)", "price_rs": 25 }
+    ],
+    "maggies": [
+      { "item": "Plain Soup Meggi", "price_rs": 25 },
+      { "item": "Veg Soup Meggi", "price_rs": 30 },
+      { "item": "Cheese Meggi", "price_rs": 40 }
+    ],
+    "meals": [
+      { "item": "Plain Chapati", "price_rs": 7 },
+      { "item": "Butter Chapati", "price_rs": 8 },
+      { "item": "Aloo Jeera (Full)", "price_rs": 40 },
+      { "item": "Aloo Jeera (Half)", "price_rs": 25 },
+      { "item": "Shahi Paneer (Full)", "price_rs": 60 },
+      { "item": "Shahi Paneer (Half)", "price_rs": 35 },
+      { "item": "Paneer Butter Masala (Full)", "price_rs": 60 },
+      { "item": "Paneer Butter Masala (Half)", "price_rs": 35 },
+      { "item": "Paneer Bhurjee (Full)", "price_rs": 60 },
+      { "item": "Paneer Bhurjee (Half)", "price_rs": 35 },
+      { "item": "Chana Masala (Full)", "price_rs": 50 },
+      { "item": "Chana Masala (Half)", "price_rs": 30 },
+      { "item": "Manchuriyan (Veg) (6 Pieces)", "price_rs": 50 },
+      { "item": "Pao Bhaji", "price_rs": 35 },
+      { "item": "Rice Chole / Rajma / Kadhi pakoda", "price_rs": 40 },
+      { "item": "Chhole Bhatura", "price_rs": 40 },
+      { "item": "Chhole Kulcha", "price_rs": 35 },
+      { "item": "Fried Rice (Full)", "price_rs": 30 },
+      { "item": "Fried Rice with manchuriyan (4 pices)", "price_rs": 50 },
+      { "item": "Jeera Rice (Full)", "price_rs": 30 }
+    ],
+    "soups": [
+      { "item": "Tomato Soups (150ml)", "price_rs": 30 },
+      { "item": "Sweet Corn Soups (150ml)", "price_rs": 30 },
+      { "item": "Hot & Sour Soups (150ml)", "price_rs": 30 },
+      { "item": "Chikin Soup (150ml)", "price_rs": 40 }
+    ],
+    "packed_items_on_mrp": [
+      "Namkeen",
+      "Biscuits",
+      "Chocolates",
+      "Beverages"
+    ]
+  }
+}

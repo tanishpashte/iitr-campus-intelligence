@@ -1,0 +1,233 @@
+{
+  "hostel_name": "Jawahar Bhawan",
+  "menu_cycle": {
+    "start_date": "2026-06-08",
+    "end_date": "2026-06-14"
+  },
+  "daily_menu": [
+    {
+      "date": "2026-06-08",
+      "day": "Monday",
+      "breakfast": [
+        "Poha jalebi",
+        "Namkeen",
+        "Masala Sprouts",
+        "Alu Masala",
+        "Butter/Egg",
+        "Banana (01)"
+      ],
+      "lunch": [
+        "Mix Veg",
+        "Dal Urad Chana",
+        "Veg Rice",
+        "Dahi",
+        "Muskmelon",
+        "Aam Pana"
+      ],
+      "dinner": [
+        "Chana Masala",
+        "Aloo Matar Curry",
+        "Palak Puri",
+        "Rice",
+        "Rice kheer with Dry Fruits"
+      ]
+    },
+    {
+      "date": "2026-06-09",
+      "day": "Tuesday",
+      "breakfast": [
+        "Uttapam",
+        "Sambhar",
+        "Nariyal Chutney",
+        "Chocos",
+        "Peanut Sprouts",
+        "Daliya",
+        "Mango Shake",
+        "Alu Masala"
+      ],
+      "lunch": [
+        "Kerala Bhurji",
+        "Dal Arhar Tadka",
+        "Sambhar Rice",
+        "Veg Raita",
+        "Papaya",
+        "Lemon Shikanji"
+      ],
+      "dinner": [
+        "Masala Kathal",
+        "Dal Urad Chilka",
+        "Lahsoon Chutney",
+        "Rice",
+        "Thandai"
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "day": "Wednesday",
+      "breakfast": [
+        "Sandwich",
+        "Tomato Sauce",
+        "Masala Sprouts",
+        "Alu Masala",
+        "Butter/Egg",
+        "Banana (01)"
+      ],
+      "lunch": [
+        "Pyaj Pakodi Kadhi",
+        "Jeera Aloo",
+        "Sabut Masoor Dal",
+        "Onion Sirka",
+        "Mango Roohafja"
+      ],
+      "dinner": [
+        "Chicken Curry / Matar Paneer",
+        "Dal Makhani",
+        "Rice",
+        "Gulab Jamun"
+      ]
+    },
+    {
+      "date": "2026-06-11",
+      "day": "Thursday",
+      "breakfast": [
+        "Medu Vada",
+        "Sambhar",
+        "Nariyal Chutney",
+        "Sprouts",
+        "Alu Masala",
+        "Chocos",
+        "Banana shake",
+        "Butter/Egg"
+      ],
+      "lunch": [
+        "Masala Louki sabzi",
+        "Dal Mix",
+        "Rasam / Butter Rice",
+        "Watermelon",
+        "Boondi Raita"
+      ],
+      "dinner": [
+        "Bhindi Do Pyaza",
+        "Dal Lal Massor saboot",
+        "Rice",
+        "Tomato Chutney",
+        "Ice Cream Butter Scotch"
+      ]
+    },
+    {
+      "date": "2026-06-12",
+      "day": "Friday",
+      "breakfast": [
+        "Cholla Kulcha",
+        "Hari Chutney/Sweet Chutney",
+        "Peanut Sprout",
+        "Daliya",
+        "Alu Masala",
+        "Butter/Egg",
+        "Banana (01)"
+      ],
+      "lunch": [
+        "Aloo Parwal (Less Aloo)",
+        "Dal Navratan",
+        "Pungal",
+        "Butter Milk",
+        "Pineapple"
+      ],
+      "dinner": [
+        "Egg Curry/Matar Mushroom",
+        "Dal Massor Saboot",
+        "Rice",
+        "Rasmalai"
+      ]
+    },
+    {
+      "date": "2026-06-13",
+      "day": "Saturday",
+      "breakfast": [
+        "Idli/Fry Idli",
+        "Sambhar",
+        "N.Chutney",
+        "Chocos",
+        "Masala Sprouts",
+        "Mango shake",
+        "Alu Masala",
+        "Butter/Egg"
+      ],
+      "lunch": [
+        "Cholla Bhatura",
+        "Aloo Matar Curry",
+        "Rice",
+        "Hari Mirch Chutney",
+        "Boondi Raita",
+        "Rose Sharbat",
+        "Muskmelon"
+      ],
+      "dinner": [
+        "Aloo Shimla Mirch (Less Aloo)",
+        "Dal Arhar Tadka",
+        "Rice",
+        "Chocolate Milk"
+      ]
+    },
+    {
+      "date": "2026-06-14",
+      "day": "Sunday",
+      "breakfast": [
+        "Mix Veg Paratha",
+        "Aloo Curry",
+        "Dahi",
+        "Hari Chutney",
+        "Alu Masala/Sprouts",
+        "Butter/Egg",
+        "Banana (01)"
+      ],
+      "lunch": [
+        "Rajmah Masala",
+        "Aloo Soya Badi",
+        "Rice",
+        "Mix Raita",
+        "Papaya",
+        "shikanji"
+      ],
+      "dinner": [
+        "Paneer Biryani / Chicken Biryani",
+        "Dal makhani",
+        "Rice",
+        "Ice Cream Vanilla"
+      ]
+    }
+  ],
+  "standard_daily_items": {
+    "breakfast_extras": [
+      "White and Brown Bread",
+      "Cornflakes",
+      "Sprouts",
+      "Daliya",
+      "Banana (01)",
+      "Milk/Dahi",
+      "Tea/Coffee/Bournvita (250ml)",
+      "Butter/Peanut Butter",
+      "Banana/Egg-1 & Jam"
+    ],
+    "lunch_extras": [
+      "Butter chapatti",
+      "plain rice",
+      "green chili",
+      "pickle",
+      "lemon",
+      "salad"
+    ],
+    "dinner_extras": [
+      "Butter chapatti",
+      "plain rice",
+      "green chili",
+      "Chilly (Fried) pickle",
+      "Lemon",
+      "Salad"
+    ]
+  },
+  "operational_notes": [
+    "Please keep small quantity of both types of jam (mixed) daily in breakfast.",
+    "Please keep small quantity of all types of achar in lunch and dinner."
+  ]
+}

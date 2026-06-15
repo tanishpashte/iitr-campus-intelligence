@@ -1,0 +1,194 @@
+{
+  "festival": "Thomso'26",
+  "theme": "A Crossroad of Cultures",
+  "day": "Day 1",
+  "dates": "23rd - 25th October",
+  "associations": {
+    "in_association_with": [
+      "VISION IAS"
+    ],
+    "driven_by": "Hero"
+  },
+  "events": [
+    {
+      "event_name": "Footloose Prelims",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "Convocation Hall"
+    },
+    {
+      "event_name": "Vogue Prelims",
+      "time": "09:00 AM to 12:30 PM",
+      "venue": "Mac Audi"
+    },
+    {
+      "event_name": "Abhivyakti Prelims",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "OP Jain"
+    },
+    {
+      "event_name": "Food Stalls",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "Hobbies Club"
+    },
+    {
+      "event_name": "Apocalypse (Valorant)",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "New LHC 103"
+    },
+    {
+      "event_name": "Step Up Prelims",
+      "time": "09:00 AM to 01:30 PM",
+      "venue": "UG Floor"
+    },
+    {
+      "event_name": "MUN-UNGA",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "NEW LHC 004"
+    },
+    {
+      "event_name": "Drishya",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "SAC OAT"
+    },
+    {
+      "event_name": "Photo Booth",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "MAC OAT"
+    },
+    {
+      "event_name": "Sargam(Group) Prelims",
+      "time": "09:00 AM to 03:30 PM",
+      "venue": "Chem Audi"
+    },
+    {
+      "event_name": "Sargam Prelims(non group)",
+      "time": "09:30 AM to 06:30 PM",
+      "venue": "Biotech Audi"
+    },
+    {
+      "event_name": "MUN-S.H.I.E.L.D council",
+      "time": "09:30 AM to 06:30 PM",
+      "venue": "New LHC 001"
+    },
+    {
+      "event_name": "MUN(AIPPM)",
+      "time": "09:30 AM to 06:30 PM",
+      "venue": "Senate Hall"
+    },
+    {
+      "event_name": "Thomso Carnival",
+      "time": "09:30 AM to 06:30 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Battle of Bands",
+      "time": "09:30 AM to 06:30 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Nukkad Natak Prelims",
+      "time": "10:00 AM to 06:30 PM",
+      "venue": "Mech ground"
+    },
+    {
+      "event_name": "Art Talkies",
+      "time": "10:30 AM to 01:00 PM",
+      "venue": "LHC 106"
+    },
+    {
+      "event_name": "Seiger Prelims",
+      "time": "11:00 AM to 06:30 PM",
+      "venue": "LHC 102"
+    },
+    {
+      "event_name": "Big Ideas-Books Pitching",
+      "time": "11:00 AM to 02:00 PM",
+      "venue": "LHC 004"
+    },
+    {
+      "event_name": "Snooker's Elite",
+      "time": "11:00 AM to 06:00 PM",
+      "venue": "Student's Club"
+    },
+    {
+      "event_name": "Mr.-Ms. Thomso Prelims",
+      "time": "11:00 AM to 06:30 PM",
+      "venue": "LHC 006"
+    },
+    {
+      "event_name": "Quirosity GENERAL Quiz",
+      "time": "11:00 AM to 02:00 PM",
+      "venue": "NEW LHC 002"
+    },
+    {
+      "event_name": "Youtube FanConnect",
+      "time": "12:30 PM to 01:30 PM",
+      "venue": "Mac Audi"
+    },
+    {
+      "event_name": "Naqaab",
+      "time": "12:30 PM to 04:30 PM",
+      "venue": "Hydes Park"
+    },
+    {
+      "event_name": "Food Fiesta Prelims",
+      "time": "01:00 PM to 03:30 PM",
+      "venue": "LHC 101"
+    },
+    {
+      "event_name": "A(D)esign",
+      "time": "01:00 PM to 04:30 PM",
+      "venue": "LHC 003"
+    },
+    {
+      "event_name": "Gully War",
+      "time": "02:00 PM to 06:30 PM",
+      "venue": "UG Floor"
+    },
+    {
+      "event_name": "Live Sketching",
+      "time": "02:30 PM to 06:30 PM",
+      "venue": "Library Steps"
+    },
+    {
+      "event_name": "Open Mic Prelims",
+      "time": "02:30 PM to 06:30 PM",
+      "venue": "MAC Audi"
+    },
+    {
+      "event_name": "Fiction Writing Workshop",
+      "time": "03:00 PM to 05:00 PM",
+      "venue": "LHC004"
+    },
+    {
+      "event_name": "Quirosity Sustainability Quiz",
+      "time": "03:00 PM to 05:00 PM",
+      "venue": "New LHC 002"
+    },
+    {
+      "event_name": "Dank Knight",
+      "time": "03:30 PM to 06:30 PM",
+      "venue": "Chem Audi"
+    },
+    {
+      "event_name": "Titan Showdown Prelims",
+      "time": "04:00 PM to 07:00 PM",
+      "venue": "LHC005"
+    },
+    {
+      "event_name": "Vogue Finals",
+      "time": "06:00 PM to 08:00 PM",
+      "venue": "LBS"
+    },
+    {
+      "event_name": "Silent DJ",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "SBI Lawn"
+    },
+    {
+      "event_name": "Thomso Karaoke",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "Swimming pool Oat"
+    }
+  ]
+}

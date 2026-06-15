@@ -1,0 +1,205 @@
+{
+  "student_name": "TANISH DEEPAK PASHTE",
+  "student-enrollment": 23119048,
+  "semester": "Spring Semester 2025-26",
+  "institution": "Indian Institute of Technology Roorkee",
+  "abbreviations": {
+    "session_types": {
+      "L": "Lecture",
+      "T": "Tutorial",
+      "P": "Practical"
+    },
+    "buildings": {
+      "APJ AKB": "APJ Abdul Kalam Block (New LHC)",
+      "GB": "Gargi Block (Old LHC)"
+    }
+  },
+  "courses_info": {
+    "HSS-302": {
+      "course_name": "Social Studies of Science",
+      "credits": 3,
+      "area": "HSSEC"
+    },
+    "MIL-335": {
+      "course_name": "Concurrent Engineering",
+      "credits": 4,
+      "area": "PEC"
+    },
+    "MIL-310": {
+      "course_name": "Quality Management",
+      "credits": 4,
+      "area": "PEC"
+    },
+    "MIC-302": {
+      "course_name": "Machine Design",
+      "credits": 4,
+      "area": "PCC"
+    },
+    "MIC-300": {
+      "course_name": "Engineering Analysis and Design(Design Thinking based project)/ Industry Oriented Problem Solving/ Lab-based Projects/ Practical Problems/ Case Study",
+      "credits": 4,
+      "area": "PCC"
+    },
+    "MIT-103": {
+      "course_name": "Design Optimization",
+      "credits": 2,
+      "area": "TEB"
+    }
+  },
+  "weekly_schedule": {
+    "Monday": [
+      {
+        "time": "09.00-09.55",
+        "type": "Lecture",
+        "course_code": "HSS-302",
+        "batch": "Batch 1",
+        "professor": "Anindya Jayanta Mishra",
+        "room_no": "APJ AKB-101"
+      },
+      {
+        "time": "14.00-14.55",
+        "type": "Lecture",
+        "course_code": "MIL-310",
+        "batch": "Batch 1",
+        "professor": "Pradeep Kumar",
+        "room_no": "APJ AKB-001"
+      },
+      {
+        "time": "15.00-15.55",
+        "type": "Lecture",
+        "course_code": "MIC-302",
+        "batch": "Batch 1 (P11, P12)",
+        "professor": "Bhanu Mishra, Vidit Gaur",
+        "room_no": "APJ AKB-001"
+      },
+      {
+        "time": "16.05-17.00",
+        "type": "Lecture",
+        "course_code": "MIL-335",
+        "batch": "Batch 1",
+        "professor": "Akshay Dvivedi",
+        "room_no": "APJ AKB-003"
+      }
+    ],
+    "Tuesday": [
+      {
+        "time": "11.05-12.00",
+        "type": "Tutorial",
+        "course_code": "MIL-335",
+        "batch": "Batch 1",
+        "professor": "Akshay Dvivedi",
+        "room_no": "APJ AKB-508"
+      },
+      {
+        "time": "14.00-14.55",
+        "type": "Lecture",
+        "course_code": "MIL-310",
+        "batch": "Batch 1",
+        "professor": "Pradeep Kumar",
+        "room_no": "APJ AKB-001"
+      }
+    ],
+    "Wednesday": [
+      {
+        "time": "09.00-09.55",
+        "type": "Lecture",
+        "course_code": "HSS-302",
+        "batch": "Batch 1",
+        "professor": "Anindya Jayanta Mishra",
+        "room_no": "APJ AKB-101"
+      },
+      {
+        "time": "11.05-12.00",
+        "type": "Tutorial",
+        "course_code": "MIL-310",
+        "batch": "Batch 1",
+        "professor": "Pradeep Kumar",
+        "room_no": "APJ AKB-508"
+      },
+      {
+        "time": "15.00-15.55",
+        "type": "Lecture",
+        "course_code": "MIC-302",
+        "batch": "Batch 1 (P11, P12)",
+        "professor": "Bhanu Mishra, Vidit Gaur",
+        "room_no": "APJ AKB-001"
+      }
+    ],
+    "Thursday": [
+      {
+        "time": "09.00-09.55",
+        "type": "Practical",
+        "course_code": "MIC-302",
+        "batch": "P11, P12",
+        "professor": "Bhanu Mishra",
+        "room_no": "APJ AKB-606"
+      },
+      {
+        "time": "10.00-10.55",
+        "type": "Practical",
+        "course_code": "MIC-302",
+        "batch": "P11, P12",
+        "professor": "Bhanu Mishra",
+        "room_no": "APJ AKB-606"
+      },
+      {
+        "time": "14.00-14.55",
+        "type": "Lecture",
+        "course_code": "MIL-310",
+        "batch": "Batch 1",
+        "professor": "Pradeep Kumar",
+        "room_no": "APJ AKB-001"
+      },
+      {
+        "time": "16.05-17.00",
+        "type": "Lecture",
+        "course_code": "MIL-335",
+        "batch": "Batch 1",
+        "professor": "Akshay Dvivedi",
+        "room_no": "APJ AKB-003"
+      }
+    ],
+    "Friday": [
+      {
+        "time": "08.00-08.55",
+        "type": "Tutorial",
+        "course_code": "HSS-302",
+        "batch": "Batch 1",
+        "professor": "Anindya Jayanta Mishra",
+        "room_no": "APJ AKB-004"
+      },
+      {
+        "time": "09.00-09.55",
+        "type": "Tutorial",
+        "course_code": "HSS-302",
+        "batch": "Batch 2",
+        "professor": "Anindya Jayanta Mishra",
+        "room_no": "APJ AKB-206"
+      },
+      {
+        "time": "15.00-15.55",
+        "type": "Lecture",
+        "course_code": "MIC-302",
+        "batch": "Batch 1 (P11, P12)",
+        "professor": "Bhanu Mishra, Vidit Gaur",
+        "room_no": "APJ AKB-001"
+      },
+      {
+        "time": "16.05-17.00",
+        "type": "Tutorial",
+        "course_code": "MIL-335",
+        "batch": "Batch 1",
+        "professor": "Akshay Dvivedi",
+        "room_no": "APJ AKB-206"
+      },
+      {
+        "time": "17.05-18.00",
+        "type": "Lecture",
+        "course_code": "MIL-335",
+        "batch": "Batch 1",
+        "professor": "Akshay Dvivedi",
+        "room_no": "APJ AKB-003"
+      }
+    ]
+  }
+}

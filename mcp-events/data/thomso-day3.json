@@ -1,0 +1,204 @@
+{
+  "festival": "Thomso'26",
+  "theme": "A Crossroad of Cultures",
+  "day": "Day 3",
+  "dates": "23rd - 25th October",
+  "associations": {
+    "in_association_with": [
+      "VISION IAS"
+    ],
+    "driven_by": "Hero"
+  },
+  "events": [
+    {
+      "event_name": "Footloose Finals",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "Convocation Hall"
+    },
+    {
+      "event_name": "Apocalypse Final",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "New LHC hall"
+    },
+    {
+      "event_name": "Apocalypse Valorant Final",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "NEW LHC 103"
+    },
+    {
+      "event_name": "Battle of Bands",
+      "time": "09:00 AM to 06:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Apocalypse FIFA Final",
+      "time": "09:00 AM to 06:30PM",
+      "venue": "Student club"
+    },
+    {
+      "event_name": "Cubelelo",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "NEW LHC 003"
+    },
+    {
+      "event_name": "Queen's Gambit",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "SAC chess club"
+    },
+    {
+      "event_name": "Snooker's Elite",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "Student's Club"
+    },
+    {
+      "event_name": "Abhivyakti finals",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "OP Jain"
+    },
+    {
+      "event_name": "Carnival",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Krafton India mobile gaming tournament",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "New LHC 005"
+    },
+    {
+      "event_name": "Seiger Finals",
+      "time": "09:00 AM to 12:30 PM",
+      "venue": "SBI Lawn"
+    },
+    {
+      "event_name": "Food stall",
+      "time": "09:00 AM to 07:00 PM",
+      "venue": "Hobbies Club"
+    },
+    {
+      "event_name": "Drishya",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "MAC OAT"
+    },
+    {
+      "event_name": "Photo Booth",
+      "time": "09:00 AM to 06:30 PM",
+      "venue": "MAC OAT"
+    },
+    {
+      "event_name": "Slam Poetry prelims",
+      "time": "09:30 AM to 02:00 PM",
+      "venue": "Chem Audi"
+    },
+    {
+      "event_name": "Thomso's Got Talent (Group)",
+      "time": "09:30 AM to 11:30 PM",
+      "venue": "MAC Audi"
+    },
+    {
+      "event_name": "Treasure Hunt",
+      "time": "10:00 AM to 01:30 PM",
+      "venue": "Library Steps"
+    },
+    {
+      "event_name": "Litfest-Desi twist",
+      "time": "10:00 AM to 12:00 PM",
+      "venue": "LHC-005"
+    },
+    {
+      "event_name": "Step Up Final",
+      "time": "10:00 AM to 04:30 PM",
+      "venue": "UG Floor"
+    },
+    {
+      "event_name": "Treasure Hunt",
+      "time": "10:00 AM to 01:30 PM",
+      "venue": "Library Steps"
+    },
+    {
+      "event_name": "Spin A Yarn",
+      "time": "10:30 AM to 02:00 PM",
+      "venue": "LHC-103,104"
+    },
+    {
+      "event_name": "Street Soccer Final",
+      "time": "10:30 AM to 02:30 PM",
+      "venue": "Football Ground"
+    },
+    {
+      "event_name": "Box Office",
+      "time": "11:00 AM to 02:30 PM",
+      "venue": "LHC 004"
+    },
+    {
+      "event_name": "Youtube Fanconnect",
+      "time": "11:30 PM to 01:30 PM",
+      "venue": "MAC AUDI"
+    },
+    {
+      "event_name": "Corporata",
+      "time": "12:00 PM to 06:30 PM",
+      "venue": "DOMS"
+    },
+    {
+      "event_name": "Relay Rangoli",
+      "time": "12:00 PM to 03:00 PM",
+      "venue": "LHC ATR"
+    },
+    {
+      "event_name": "Tote BAG design",
+      "time": "12:30 PM to 03:30 PM",
+      "venue": "SAC Hall"
+    },
+    {
+      "event_name": "Thomso's Got Talent (Solo)",
+      "time": "01:30 PM to 07:00 PM",
+      "venue": "Mac Audi"
+    },
+    {
+      "event_name": "Open Mic Finals",
+      "time": "02:00 PM to 04:00 PM",
+      "venue": "Chem Audi"
+    },
+    {
+      "event_name": "Quirosity - MELAS",
+      "time": "02:00 PM to 05:30 PM",
+      "venue": "NEW LHC 001"
+    },
+    {
+      "event_name": "Digital Marketing Workshop",
+      "time": "03:00 PM to 05:00 PM",
+      "venue": "LHC 003"
+    },
+    {
+      "event_name": "Sneaker Design",
+      "time": "03:30 PM to 06:30 PM",
+      "venue": "SAC Hall"
+    },
+    {
+      "event_name": "Slam Poetry finals",
+      "time": "04:00 PM to 06:30 PM",
+      "venue": "LHC 005"
+    },
+    {
+      "event_name": "Coscon",
+      "time": "04:30 PM to 07:00 PM",
+      "venue": "UG Floor"
+    },
+    {
+      "event_name": "Vileen Performance",
+      "time": "06:00 PM to 07:00 PM",
+      "venue": "ABN Ground"
+    },
+    {
+      "event_name": "Silent DJ",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "SBI Lawn"
+    },
+    {
+      "event_name": "Thomso Karaoke",
+      "time": "10:30 PM to 01:30 AM",
+      "venue": "Swimming pool Oat"
+    }
+  ]
+}
