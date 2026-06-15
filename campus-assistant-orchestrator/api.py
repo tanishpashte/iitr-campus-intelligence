@@ -17,29 +17,45 @@ from dotenv import load_dotenv
 # Load API keys and environment variables
 load_dotenv()
 
+# Base directory of the repository (parent of campus-assistant-orchestrator)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def get_python_exec(dir_name: str) -> str:
+    dir_path = os.path.join(BASE_DIR, dir_name)
+    # Unix-like venv
+    venv_python = os.path.join(dir_path, ".venv", "bin", "python")
+    if os.path.exists(venv_python):
+        return venv_python
+    # Windows venv
+    venv_python_win = os.path.join(dir_path, ".venv", "Scripts", "python.exe")
+    if os.path.exists(venv_python_win):
+        return venv_python_win
+    # Fallback to current environment python
+    return sys.executable
+
 # Define Server Parameters for all four microservices
 library_params = StdioServerParameters(
-    command="/home/tanish/code/projects/iitr-campus-intelligence/mcp-library/.venv/bin/python",
+    command=get_python_exec("mcp-library"),
     args=["server.py"],
-    cwd="/home/tanish/code/projects/iitr-campus-intelligence/mcp-library"
+    cwd=os.path.join(BASE_DIR, "mcp-library")
 )
 
 academics_params = StdioServerParameters(
-    command="/home/tanish/code/projects/iitr-campus-intelligence/mcp-academics/.venv/bin/python",
+    command=get_python_exec("mcp-academics"),
     args=["server.py"],
-    cwd="/home/tanish/code/projects/iitr-campus-intelligence/mcp-academics"
+    cwd=os.path.join(BASE_DIR, "mcp-academics")
 )
 
 events_params = StdioServerParameters(
-    command="/home/tanish/code/projects/iitr-campus-intelligence/mcp-events/.venv/bin/python",
+    command=get_python_exec("mcp-events"),
     args=["server.py"],
-    cwd="/home/tanish/code/projects/iitr-campus-intelligence/mcp-events"
+    cwd=os.path.join(BASE_DIR, "mcp-events")
 )
 
 mess_params = StdioServerParameters(
-    command="/home/tanish/code/projects/iitr-campus-intelligence/mcp-mess/.venv/bin/python",
+    command=get_python_exec("mcp-mess"),
     args=["server.py"],
-    cwd="/home/tanish/code/projects/iitr-campus-intelligence/mcp-mess"
+    cwd=os.path.join(BASE_DIR, "mcp-mess")
 )
 
 # Mapping of MCP tools to frontend UI component identifiers

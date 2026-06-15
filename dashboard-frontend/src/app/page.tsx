@@ -31,6 +31,8 @@ interface Message {
   isLoading?: boolean;
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 export default function Home() {
   const [chatInput, setChatInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
@@ -127,11 +129,11 @@ export default function Home() {
 
   // Try to check if backend API is running, and set simulation mode if not
   useEffect(() => {
-    fetch("http://localhost:8000/health")
+    fetch(`${API_URL}/health`)
       .then((res) => {
         if (!res.ok) throw new Error();
         setIsSimulated(false);
-        return fetch("http://localhost:8000/api/dashboard/init");
+        return fetch(`${API_URL}/api/dashboard/init`);
       })
       .then((res) => {
         if (res && res.ok) return res.json();
@@ -181,7 +183,7 @@ export default function Home() {
         await simulateResponse(userText, aiPlaceholderId);
       } else {
         // Call actual FastAPI server endpoint
-        const res = await fetch("http://localhost:8000/api/chat", {
+        const res = await fetch(`${API_URL}/api/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: userText })
