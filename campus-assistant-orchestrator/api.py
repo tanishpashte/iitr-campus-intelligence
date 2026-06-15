@@ -153,11 +153,18 @@ async def lifespan(app: FastAPI):
         state.session_mess = await stack.enter_async_context(ClientSession(read_mess, write_mess))
         
         print("Initializing sessions (MCP Handshake)...", flush=True)
+        async def safe_initialize(session, name):
+            try:
+                await asyncio.wait_for(session.initialize(), timeout=60.0)
+                print(f"MCP session '{name}' initialized successfully.", flush=True)
+            except Exception as e:
+                print(f"WARNING: MCP session '{name}' failed to initialize: {e}. Service will be unavailable.", flush=True)
+
         await asyncio.gather(
-            state.session_lib.initialize(),
-            state.session_acad.initialize(),
-            state.session_ev.initialize(),
-            state.session_mess.initialize()
+            safe_initialize(state.session_lib, "library"),
+            safe_initialize(state.session_acad, "academics"),
+            safe_initialize(state.session_ev, "events"),
+            safe_initialize(state.session_mess, "mess"),
         )
         
         print("Handshakes complete. Aggregating tools...", flush=True)

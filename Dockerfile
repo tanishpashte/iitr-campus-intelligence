@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir \
     -r mcp-library/requirements.txt \
     -r mcp-mess/requirements.txt
 
+# Pre-download and cache the sentence transformer model during build time
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+
 # Expose the dynamic port
 EXPOSE 8000
 
