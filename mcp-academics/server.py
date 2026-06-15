@@ -349,8 +349,23 @@ def search_calendar(query: str, top_k: int = 5) -> List[str]:
             if idx == -1:
                 continue
             chunk = calendar_chunks[idx]
-            match_text = chunk["text"]
-            results.append(f"🎯 [Score: {score:.3f}] {match_text}")
+            meta = chunk["metadata"]
+            
+            if chunk["type"] == "event":
+                dt = meta.get("start_date", "Date not specified")
+                if meta.get("end_date") and meta["end_date"] != dt:
+                    dt += f" to {meta['end_date']}"
+                details = meta.get("details", chunk["text"])
+                results.append(f"{dt}: {details}")
+            elif chunk["type"] == "holiday":
+                dt = meta.get("date", "Date not specified")
+                name = meta.get("name", "Holiday")
+                results.append(f"{dt}: {name} (Holiday)")
+            else:
+                dt = meta.get("rescheduled_date") or meta.get("date") or "Date not specified"
+                text = chunk["text"].replace(":", "-") # avoid breaking UI split
+                results.append(f"{dt}: {text}")
+                
             found_matches = True
             
         if not found_matches:

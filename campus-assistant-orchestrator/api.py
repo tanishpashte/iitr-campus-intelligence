@@ -198,7 +198,16 @@ async def lifespan(app: FastAPI):
         state.genai_client = genai.Client(api_key=api_key)
         state.generate_config = types.GenerateContentConfig(
             tools=[types.Tool(functionDeclarations=state.function_declarations)],
-            systemInstruction="You are the IITR Campus Assistant. You help students with information from the library, academics (schedules/calendar), events (Thomso), and the hostel mess (menus and prices). Answer questions clearly. When you need information, call the appropriate tools."
+            systemInstruction=(
+                "You are the IITR Campus Assistant. You help students with information from the library, "
+                "academics (schedules/calendar), events (Thomso), and the hostel mess (menus and prices). "
+                "Answer questions clearly. When you need information, call the appropriate tools. "
+                "CRITICAL INSTRUCTIONS: "
+                "1) If a tool returns no results, do NOT retry calling the same tool multiple times. Accept the result. "
+                "2) For long lists (like food items, menu alternatives, or many events), DO NOT list all items in your chat text response. "
+                "Instead, just provide a short summary and tell the user to look at the UI dashboard widget. "
+                "3) Do NOT call 'get_current_mess_meal' when asked for 'canteen' or 'food under X budget', use 'get_canteen_alternatives_by_budget' instead."
+            )
         )
         
         yield
@@ -388,17 +397,18 @@ async def dashboard_init_endpoint():
     print(f"⚙️ Running direct bypass dashboard init logic. Current time: {current_time}. Fetching: '{meal_type}' meal and Academics data for {weekday} ({date_str})...", flush=True)
     
     try:
-        # Call the mess server directly
-        tool_result = await state.session_mess.call_tool("get_current_mess_meal", {"meal_type": meal_type})
-        meal_data = extract_tool_data(tool_result)
+        # Call the mess server for all 3 meals
+        b_res = await state.session_mess.call_tool("get_current_mess_meal", {"meal_type": "breakfast"})
+        l_res = await state.session_mess.call_tool("get_current_mess_meal", {"meal_type": "lunch"})
+        d_res = await state.session_mess.call_tool("get_current_mess_meal", {"meal_type": "dinner"})
         
         # Structure the data matching the frontend's mess_menu component contract
         ui_data = {
             "type": "mess_menu",
             "data": {
-                "breakfast": meal_data if meal_type == "breakfast" else None,
-                "lunch": meal_data if meal_type == "lunch" else None,
-                "dinner": meal_data if meal_type == "dinner" else None,
+                "breakfast": extract_tool_data(b_res),
+                "lunch": extract_tool_data(l_res),
+                "dinner": extract_tool_data(d_res),
                 "active_meal": meal_type
             }
         }
@@ -415,7 +425,7 @@ async def dashboard_init_endpoint():
             "calendar": calendar_data
         }
         
-        print(f"✅ Dashboard init successfully fetched '{meal_type}' meal menu and Academics data.", flush=True)
+        print(f"✅ Dashboard init successfully fetched all meals and Academics data.", flush=True)
         return DashboardInitResponse(ui_data=ui_data, academics=academics_dict)
     except Exception as e:
         print(f"❌ Error in direct bypass dashboard init: {e}", file=sys.stderr, flush=True)
