@@ -333,19 +333,22 @@ def get_textbook_or_staff_details(course_code: str = None, staff_role: str = Non
     }
 
 @mcp.tool()
-def query_library_guidelines_and_faqs(user_prompt: str, top_k: int = 5) -> list:
+def query_library_guidelines_and_faqs(user_prompt: str, top_k: int = 3) -> list:
     """
     Semantic search tool to query Mahatma Gandhi Central Library guidelines, policies, schedules, and FAQs.
     
     Args:
         user_prompt: The search query / prompt describing what operational rules or guidelines you want to find.
-        top_k: Number of relevant results to return (default 5).
+        top_k: Number of relevant results to return (default 3, max 3).
         
     Returns:
         A list of dictionaries representing the most relevant matching paragraphs, including the source file, score, and text.
     """
     if not index or not chunks:
         return []
+        
+    # Enforce maximum top_k of 3
+    top_k = min(top_k, 3)
         
     # Encode and normalize query
     query_vector = model.encode([user_prompt], convert_to_numpy=True)
@@ -359,10 +362,12 @@ def query_library_guidelines_and_faqs(user_prompt: str, top_k: int = 5) -> list:
         if idx == -1:
             continue
         chunk = chunks[idx]
+        # Strip out raw markdown headers (e.g. #, ##, ###) at the start of any line
+        clean_text = re.sub(r'^#+\s+', '', chunk["text"], flags=re.MULTILINE).strip()
         results.append({
             "score": float(score),
             "source": chunk["source"],
-            "text": chunk["text"]
+            "text": clean_text
         })
         
     return results
