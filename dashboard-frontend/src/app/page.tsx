@@ -56,6 +56,15 @@ export default function Home() {
       .then((res) => {
         if (!res.ok) throw new Error();
         setIsSimulated(false);
+        return fetch("http://localhost:8000/api/dashboard/init");
+      })
+      .then((res) => {
+        if (res && res.ok) return res.json();
+      })
+      .then((data) => {
+        if (data && data.ui_data) {
+          setDashboardData(data.ui_data);
+        }
       })
       .catch(() => {
         setIsSimulated(true);

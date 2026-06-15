@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime, time
 import os
 import sys
 import json
@@ -74,6 +75,9 @@ class ChatResponse(BaseModel):
     response: str
     ui_data: Optional[Dict[str, Any]] = None
     triggered_tools: List[Dict[str, Any]] = []
+
+class DashboardInitResponse(BaseModel):
+    ui_data: Optional[Dict[str, Any]] = None
 
 class LifespanState:
     def __init__(self):
@@ -316,6 +320,51 @@ async def chat_endpoint(request: ChatRequest):
         
     except Exception as e:
         print(f"Error in chat endpoint: {e}", file=sys.stderr, flush=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/dashboard/init", response_model=DashboardInitResponse)
+async def dashboard_init_endpoint():
+    if not state.session_mess:
+        raise HTTPException(status_code=503, detail="Mess service is not initialized.")
+        
+    # Determine meal type based on local time
+    now = datetime.now()
+    current_time = now.time()
+    
+    # 9:30 am
+    limit_breakfast = time(9, 30)
+    # 2:30 pm (14:30)
+    limit_lunch = time(14, 30)
+    
+    if current_time <= limit_breakfast:
+        meal_type = "breakfast"
+    elif limit_breakfast < current_time < limit_lunch:
+        meal_type = "lunch"
+    else:
+        meal_type = "dinner"
+        
+    print(f"⚙️ Running direct bypass dashboard init logic. Current time: {current_time}. Fetching: '{meal_type}' meal...", flush=True)
+    
+    try:
+        # Call the mess server directly
+        tool_result = await state.session_mess.call_tool("get_current_mess_meal", {"meal_type": meal_type})
+        meal_data = extract_tool_data(tool_result)
+        
+        # Structure the data matching the frontend's mess_menu component contract
+        ui_data = {
+            "type": "mess_menu",
+            "data": {
+                "breakfast": meal_data if meal_type == "breakfast" else None,
+                "lunch": meal_data if meal_type == "lunch" else None,
+                "dinner": meal_data if meal_type == "dinner" else None,
+                "active_meal": meal_type
+            }
+        }
+        
+        print(f"✅ Dashboard init successfully fetched '{meal_type}' meal menu.", flush=True)
+        return DashboardInitResponse(ui_data=ui_data)
+    except Exception as e:
+        print(f"❌ Error in direct bypass dashboard init: {e}", file=sys.stderr, flush=True)
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
