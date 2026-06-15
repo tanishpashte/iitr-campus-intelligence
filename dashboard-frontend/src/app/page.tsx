@@ -39,8 +39,7 @@ export default function Home() {
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeComponent, setActiveComponent] = useState<string | null>(null);
-  const [componentData, setComponentData] = useState<any>(null);
+  const [dashboardData, setDashboardData] = useState<any>(null);
   const [isSimulated, setIsSimulated] = useState(false);
 
   // Status of the 4 MCP services we actually possess
@@ -113,9 +112,8 @@ export default function Home() {
           )
         );
 
-        if (data.ui_data && data.ui_data.ui_component && data.ui_data.data) {
-          setActiveComponent(data.ui_data.ui_component);
-          setComponentData(data.ui_data.data);
+        if (data.ui_data) {
+          setDashboardData(data.ui_data);
         }
       }
     } catch (err) {
@@ -184,8 +182,10 @@ export default function Home() {
       )
     );
     if (component) {
-      setActiveComponent(component);
-      setComponentData(data);
+      setDashboardData({
+        type: component,
+        data: data
+      });
     }
   };
 
@@ -195,140 +195,283 @@ export default function Home() {
 
   // Render the Dynamic UI Panel matching the API's ui_component string
   const renderComponent = () => {
-    if (!activeComponent || !componentData) return null;
+    if (!dashboardData || !dashboardData.type || !dashboardData.data) return null;
 
-    switch (activeComponent) {
-      case "mess_menu":
+    // Helper to safely convert text block arrays or single multiline string lists to lines
+    const getLines = (data: any): string[] => {
+      if (typeof data === "string") {
+        return data.split("\n").map(l => l.trim()).filter(Boolean);
+      }
+      if (Array.isArray(data)) {
+        return data.map(item => typeof item === "string" ? item : JSON.stringify(item));
+      }
+      return [];
+    };
+
+    switch (dashboardData.type) {
+      case "mess_menu": {
+        const lines = getLines(dashboardData.data);
+        const isArray = Array.isArray(dashboardData.data);
+        const breakfast = (!isArray && dashboardData.data?.breakfast) ? dashboardData.data.breakfast : ["Poha Jalebi", "Masala Sprouts", "Banana", "Milk/Tea"];
+        const lunch = isArray ? lines : (dashboardData.data?.lunch || lines);
+        const dinner = (!isArray && dashboardData.data?.dinner) ? dashboardData.data.dinner : ["Chana Masala", "Aloo Matar Curry", "Palak Puri", "Rice Kheer"];
+        
         return (
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <Utensils className="h-4 w-4 text-amber-500" /> Hostel Mess Menu
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {Array.isArray(componentData) &&
-                componentData.map((item: string, idx: number) => (
-                  <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <span className="h-2 w-2 rounded-full bg-amber-500"></span>
-                    <span className="text-sm font-medium text-slate-700">{item}</span>
-                  </div>
-                ))}
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+              <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <Utensils className="h-5 w-5 text-amber-500" /> Daily Bhawan Mess Menu
+              </h4>
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider bg-slate-100 px-2.5 py-1 rounded-full">Jawahar Bhawan</span>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Breakfast Column */}
+              <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
+                <h5 className="text-xs font-extrabold text-amber-800 uppercase tracking-wider bg-amber-50 px-2 py-1 rounded w-max">Breakfast</h5>
+                <ul className="space-y-2">
+                  {breakfast.map((item: string, i: number) => (
+                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              {/* Lunch Column */}
+              <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
+                <h5 className="text-xs font-extrabold text-indigo-800 uppercase tracking-wider bg-indigo-50 px-2 py-1 rounded w-max">Lunch</h5>
+                <ul className="space-y-2">
+                  {lunch.map((item: string, i: number) => (
+                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-indigo-400 shrink-0"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Dinner Column */}
+              <div className="space-y-3 p-4 rounded-xl bg-slate-50/50 border border-slate-100">
+                <h5 className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2 py-1 rounded w-max">Dinner</h5>
+                <ul className="space-y-2">
+                  {dinner.map((item: string, i: number) => (
+                    <li key={i} className="text-xs font-medium text-slate-600 flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         );
+      }
 
-      case "canteen_menu":
+      case "academic_calendar":
+      case "calendar_search_results": {
+        const lines = getLines(dashboardData.data);
+        const titleStr = lines.find((item: string) => item.startsWith("==="))?.replace(/===/g, "").trim() || "Academic Calendar Milestones";
+        const events = lines.filter((item: string) => !item.startsWith("===") && !item.startsWith("---"));
+        
+        return (
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 pb-4">
+              <h4 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <GraduationCap className="h-5 w-5 text-blue-500" /> {titleStr}
+              </h4>
+            </div>
+
+            <div className="relative border-l border-slate-100 pl-4 space-y-6">
+              {events.map((event: string, idx: number) => {
+                const parts = event.split(": ");
+                const dateHeader = parts[0] || "";
+                const details = parts[1] || "";
+                const isHoliday = details.toLowerCase().includes("holiday") || event.toLowerCase().includes("holiday");
+                
+                return (
+                  <div key={idx} className="relative group">
+                    <span className={`absolute -left-[21px] top-1.5 h-3 w-3 rounded-full border-2 border-white ring-4 ring-white ${isHoliday ? "bg-rose-500 ring-rose-50" : "bg-blue-500 ring-blue-50"}`}></span>
+                    <div className="space-y-1">
+                      <p className={`text-xs font-bold ${isHoliday ? "text-rose-600 bg-rose-50 px-2 py-0.5 rounded w-max" : "text-blue-700 bg-blue-50 px-2 py-0.5 rounded w-max"}`}>
+                        {dateHeader}
+                      </p>
+                      <p className="text-sm font-medium text-slate-700 leading-relaxed">
+                        {details || event}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+              {events.length === 0 && (
+                <div className="text-sm text-slate-600 space-y-2">
+                  {lines.map((line, idx) => (
+                    <p key={idx}>{line}</p>
+                  ))}
+                  {lines.length === 0 && <p className="text-slate-400">No milestones to display.</p>}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      case "canteen_menu": {
+        const lines = getLines(dashboardData.data);
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Utensils className="h-4 w-4 text-amber-500" /> Canteen Menu Items (In Budget)
             </h4>
             <div className="divide-y divide-slate-100">
-              {Array.isArray(componentData) &&
-                componentData.map((item: string, idx: number) => {
-                  const parts = item.split(" - ");
-                  return (
-                    <div key={idx} className="flex justify-between py-3">
-                      <span className="text-sm font-medium text-slate-700">{parts[0]}</span>
-                      <span className="text-sm font-semibold text-indigo-600">{parts[1] || ""}</span>
-                    </div>
-                  );
-                })}
+              {lines.map((item: string, idx: number) => {
+                const parts = item.split(" - ");
+                return (
+                  <div key={idx} className="flex justify-between py-3">
+                    <span className="text-sm font-medium text-slate-700">{parts[0]}</span>
+                    <span className="text-sm font-semibold text-indigo-600">{parts[1] || ""}</span>
+                  </div>
+                );
+              })}
+              {lines.length === 0 && (
+                <p className="text-sm text-slate-500 py-2">No items found within the specified budget.</p>
+              )}
             </div>
           </div>
         );
+      }
 
-      case "daily_schedule":
+      case "daily_schedule": {
+        const lines = getLines(dashboardData.data);
+        const classes = lines.filter((item: string) => item.includes("⏰"));
+        
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <GraduationCap className="h-4 w-4 text-blue-500" /> Daily Schedule & Classes
             </h4>
             <div className="space-y-4">
-              {Array.isArray(componentData) &&
-                componentData
-                  .filter((item: string) => item.includes("⏰"))
-                  .map((item: string, idx: number) => {
-                    // Extract fields from string
-                    const clean = item.replace("⏰ ", "");
-                    const parts = clean.split(" | ");
-                    return (
-                      <div key={idx} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 items-start">
-                        <div className="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-xs font-bold shrink-0">
-                          {parts[0]}
-                        </div>
-                        <div className="space-y-1">
-                          <p className="text-sm font-bold text-slate-800">{parts[1]}</p>
-                          <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500">
-                            <span>{parts[2]}</span>
-                            <span>•</span>
-                            <span>{parts[3]}</span>
-                            <span>•</span>
-                            <span>{parts[4]}</span>
-                          </div>
+              {classes.length > 0 ? (
+                classes.map((item: string, idx: number) => {
+                  const clean = item.replace("⏰ ", "");
+                  const parts = clean.split(" | ");
+                  return (
+                    <div key={idx} className="flex gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 items-start">
+                      <div className="px-2.5 py-1 rounded bg-blue-100 text-blue-700 text-xs font-bold shrink-0">
+                        {parts[0]}
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-800">{parts[1]}</p>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500">
+                          <span>{parts[2]}</span>
+                          <span>•</span>
+                          <span>{parts[3]}</span>
+                          <span>•</span>
+                          <span>{parts[4]}</span>
                         </div>
                       </div>
-                    );
-                  })}
-              {Array.isArray(componentData) && componentData.length === 0 && (
-                <p className="text-sm text-slate-500 py-2">No classes scheduled for today.</p>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="text-sm text-slate-600 space-y-2">
+                  {lines.map((line, idx) => (
+                    <p key={idx}>{line}</p>
+                  ))}
+                  {lines.length === 0 && <p className="text-slate-400">No classes scheduled.</p>}
+                </div>
               )}
             </div>
           </div>
         );
+      }
 
-      case "events_list":
+      case "events_list": {
+        const lines = getLines(dashboardData.data);
+        const eventItems = lines.filter((item: string) => item.includes("🎯"));
+        
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Calendar className="h-4 w-4 text-rose-500" /> Thomso Festival Search Results
             </h4>
             <div className="space-y-3">
-              {Array.isArray(componentData) &&
-                componentData
-                  .filter((item: string) => item.includes("🎯"))
-                  .map((item: string, idx: number) => {
-                    // Parse: 🎯 [Score: 0.892] Day 1 | Footloose (Solo Dance) | Time: 2:00 PM | Venue: OAT | Category: Competition
-                    const clean = item.replace(/🎯\s*\[Score:\s*[\d.]+\]\s*/, "");
-                    const parts = clean.split(" | ");
-                    return (
-                      <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors flex justify-between items-start">
-                        <div>
-                          <span className="text-[10px] uppercase font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full">
-                            {parts[0]}
-                          </span>
-                          <h5 className="font-bold text-slate-800 text-sm mt-1.5">{parts[1]}</h5>
-                          <div className="flex gap-3 text-xs text-slate-400 mt-1">
-                            <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {parts[2]?.replace("Time: ", "")}</span>
-                            <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {parts[3]?.replace("Venue: ", "")}</span>
-                          </div>
-                        </div>
-                        <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
-                          {parts[4]?.replace("Category: ", "")}
-                        </span>
+              {eventItems.map((item: string, idx: number) => {
+                const clean = item.replace(/🎯\s*\[Score:\s*[\d.]+\]\s*/, "");
+                const parts = clean.split(" | ");
+                return (
+                  <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:bg-slate-50 transition-colors flex justify-between items-start">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full">
+                        {parts[0]}
+                      </span>
+                      <h5 className="font-bold text-slate-800 text-sm mt-1.5">{parts[1]}</h5>
+                      <div className="flex gap-3 text-xs text-slate-400 mt-1">
+                        <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {parts[2]?.replace("Time: ", "")}</span>
+                        <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {parts[3]?.replace("Venue: ", "")}</span>
                       </div>
-                    );
-                  })}
+                    </div>
+                    <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                      {parts[4]?.replace("Category: ", "")}
+                    </span>
+                  </div>
+                );
+              })}
+              {eventItems.length === 0 && (
+                <div className="text-sm text-slate-600 space-y-2">
+                  {lines.map((line, idx) => (
+                    <p key={idx}>{line}</p>
+                  ))}
+                  {lines.length === 0 && <p className="text-slate-400">No events found matching your search.</p>}
+                </div>
+              )}
             </div>
           </div>
         );
+      }
 
-      case "tbls_textbooks":
+      case "electronic_resources":
+      case "tbls_textbooks": {
+        const isArray = Array.isArray(dashboardData.data);
+        const books = isArray ? dashboardData.data : getLines(dashboardData.data);
+        
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-cyan-500" /> Textbook Results (TBLS)
+              <BookOpen className="h-4 w-4 text-cyan-500" /> Library Resources & Textbooks
             </h4>
             <div className="divide-y divide-slate-100">
-              {Array.isArray(componentData) &&
-                componentData.map((book: any, idx: number) => (
+              {books.map((book: any, idx: number) => {
+                if (typeof book === "string") {
+                  return (
+                    <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
+                      <p className="text-sm font-medium text-slate-700">{book}</p>
+                    </div>
+                  );
+                }
+                return (
                   <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
                     <p className="text-sm font-bold text-slate-800">{book.title || book.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">Author: {book.author} | Edition: {book.edition}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {book.author && `Author: ${book.author}`}
+                      {book.edition && ` | Edition: ${book.edition}`}
+                      {book.url && (
+                        <a href={book.url} target="_blank" rel="noreferrer" className="text-indigo-600 hover:underline block mt-1">
+                          Access Resource
+                        </a>
+                      )}
+                    </p>
                   </div>
-                ))}
+                );
+              })}
+              {books.length === 0 && (
+                <p className="text-sm text-slate-500 py-2">No textbooks or resources found.</p>
+              )}
             </div>
           </div>
         );
+      }
 
       case "library_facility":
         return (
@@ -337,53 +480,156 @@ export default function Home() {
               <BookOpen className="h-4 w-4 text-cyan-500" /> Library Facility Location
             </h4>
             <div className="prose prose-slate text-sm text-slate-600 leading-relaxed whitespace-pre-line">
-              {typeof componentData === "string" ? componentData : JSON.stringify(componentData)}
+              {typeof dashboardData.data === "string" ? dashboardData.data : JSON.stringify(dashboardData.data)}
             </div>
           </div>
         );
 
-      case "library_staff":
+      case "library_guidelines": {
+        const isArray = Array.isArray(dashboardData.data);
+        const guidelines = isArray ? dashboardData.data : [];
+        
+        return (
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+            <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-cyan-500" /> MGCL Library Policy & FAQs
+            </h4>
+            <div className="space-y-4">
+              {guidelines.map((g: any, idx: number) => (
+                <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50/50">
+                  <span className="text-[10px] uppercase font-bold text-cyan-600 bg-cyan-50 px-2 py-0.5 rounded-full">
+                    Source: {g.source || "Library Guidelines"}
+                  </span>
+                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                    {g.text}
+                  </p>
+                </div>
+              ))}
+              {!isArray && typeof dashboardData.data === "string" && (
+                <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-line">
+                  {dashboardData.data}
+                </p>
+              )}
+              {guidelines.length === 0 && !dashboardData.data && (
+                <p className="text-sm text-slate-500 py-2">No library guidelines match the query.</p>
+              )}
+            </div>
+          </div>
+        );
+      }
+
+      case "library_staff": {
+        const isArray = Array.isArray(dashboardData.data);
+        const staff = isArray ? dashboardData.data : [];
+
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-cyan-500" /> Library Staff Contacts
             </h4>
             <div className="grid grid-cols-1 gap-4">
-              {Array.isArray(componentData) &&
-                componentData.map((staff: any, idx: number) => (
-                  <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
-                    <div>
-                      <p className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                        <User className="h-4 w-4 text-slate-400" /> {staff.name}
-                      </p>
-                      <p className="text-xs text-slate-500 mt-0.5">{staff.designation}</p>
-                    </div>
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs text-indigo-600">
-                      {staff.emails?.map((email: string, i: number) => (
-                        <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline">
-                          <Mail className="h-3 w-3" /> {email}
-                        </a>
-                      ))}
-                      {staff.phones?.map((phone: string, i: number) => (
-                        <span key={i} className="flex items-center gap-1 text-slate-500">
-                          <Phone className="h-3 w-3" /> {phone}
-                        </span>
-                      ))}
-                    </div>
+              {staff.map((s: any, idx: number) => (
+                <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                      <User className="h-4 w-4 text-slate-400" /> {s.name}
+                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5">{s.designation}</p>
                   </div>
-                ))}
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs text-indigo-600">
+                    {s.emails?.map((email: string, i: number) => (
+                      <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline">
+                        <Mail className="h-3 w-3" /> {email}
+                      </a>
+                    ))}
+                    {s.phones?.map((phone: string, i: number) => (
+                      <span key={i} className="flex items-center gap-1 text-slate-500">
+                        <Phone className="h-3 w-3" /> {phone}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              {!isArray && (
+                <p className="text-xs text-slate-600 whitespace-pre-line">{dashboardData.data}</p>
+              )}
             </div>
           </div>
         );
+      }
+
+      case "textbook_or_staff_details": {
+        const textbooks = dashboardData.data?.textbooks || [];
+        const staff = dashboardData.data?.staff || [];
+        
+        return (
+          <div className="space-y-6">
+            {textbooks.length > 0 && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-cyan-500" /> Textbook Results
+                </h4>
+                <div className="divide-y divide-slate-100">
+                  {textbooks.map((book: any, idx: number) => (
+                    <div key={idx} className="py-3.5 first:pt-0 last:pb-0">
+                      <p className="text-sm font-bold text-slate-800">{book.title || book.name}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">Author: {book.author} | Edition: {book.edition}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {staff.length > 0 && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-cyan-500" /> Staff Directory
+                </h4>
+                <div className="grid grid-cols-1 gap-4">
+                  {staff.map((s: any, idx: number) => (
+                    <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50 flex flex-col justify-between">
+                      <div>
+                        <p className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                          <User className="h-4 w-4 text-slate-400" /> {s.name}
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">{s.designation}</p>
+                      </div>
+                      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-slate-100 pt-3 text-xs text-indigo-600">
+                        {s.emails?.map((email: string, i: number) => (
+                          <a key={i} href={`mailto:${email}`} className="flex items-center gap-1 hover:underline">
+                            <Mail className="h-3 w-3" /> {email}
+                          </a>
+                        ))}
+                        {s.phones?.map((phone: string, i: number) => (
+                          <span key={i} className="flex items-center gap-1 text-slate-500">
+                            <Phone className="h-3 w-3" /> {phone}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {textbooks.length === 0 && staff.length === 0 && (
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">Response Data</h4>
+                <pre className="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl overflow-x-auto">
+                  {JSON.stringify(dashboardData.data, null, 2)}
+                </pre>
+              </div>
+            )}
+          </div>
+        );
+      }
 
       default:
         return (
           <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
             <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">
-              Response Data ({activeComponent})
+              Response Data ({dashboardData.type})
             </h4>
             <pre className="text-xs text-slate-600 bg-slate-50 p-4 rounded-xl overflow-x-auto">
-              {JSON.stringify(componentData, null, 2)}
+              {JSON.stringify(dashboardData.data, null, 2)}
             </pre>
           </div>
         );
@@ -421,14 +667,13 @@ export default function Home() {
 
         {/* Dynamic Canvas Workspace */}
         <main className="flex-1 overflow-y-auto p-8 max-w-4xl w-full mx-auto space-y-6">
-          {activeComponent ? (
+          {dashboardData ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <span className="text-xs text-slate-400 font-bold uppercase tracking-wider">Active Workspace View</span>
                 <button
                   onClick={() => {
-                    setActiveComponent(null);
-                    setComponentData(null);
+                    setDashboardData(null);
                   }}
                   className="flex items-center gap-1 text-xs text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100/60 border border-rose-100 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
                 >

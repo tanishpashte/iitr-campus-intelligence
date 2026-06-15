@@ -297,12 +297,15 @@ async def chat_endpoint(request: ChatRequest):
             if successful:
                 ui_data = {
                     "ui_component": successful[0]["ui_component"],
+                    "type": successful[0]["ui_component"],
                     "data": successful[0]["data"]
                 }
             else:
                 ui_data = {
                     "ui_component": triggered_tools[0]["ui_component"],
-                    "data": triggered_tools[0].get("data")
+                    "type": triggered_tools[0]["ui_component"],
+                    "data": triggered_tools[0].get("data"),
+                    "error": triggered_tools[0].get("error")
                 }
                 
         return ChatResponse(
