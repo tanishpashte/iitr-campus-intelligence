@@ -226,74 +226,111 @@ async def chat_endpoint(request: ChatRequest):
     if not state.genai_client:
         raise HTTPException(status_code=503, detail="Gemini client is not initialized.")
         
+    MODELS = ["gemini-3.5-flash", "gemini-3.1-flash-lite"]
+    
+    response = None
+    triggered_tools = []
+    
     try:
-        # Handle chat history session
-        if request.clear_history or request.session_id not in state.active_chats:
-            state.active_chats[request.session_id] = state.genai_client.chats.create(
-                model="gemini-3.1-flash-lite",
-                config=state.generate_config
-            )
-            
-        chat = state.active_chats[request.session_id]
-        
-        # Send initial message (run blocking SDK call in background thread)
-        response = await asyncio.to_thread(chat.send_message, request.message)
-        
-        triggered_tools = []
-        
-        # Process tool execution loop
-        while response.function_calls:
-            tool_responses = []
-            for call in response.function_calls:
-                name = call.name
-                args = call.args
-                print(f"⚙️ Running tool '{name}' with args: {args}...", flush=True)
-                
-                if name in state.tool_map:
-                    session = state.tool_map[name]
-                    try:
-                        tool_result = await session.call_tool(name, args)
-                        formatted_result = {
-                            "content": [block.model_dump() for block in tool_result.content]
-                        }
-                        
-                        tool_data = extract_tool_data(tool_result)
-                        triggered_tools.append({
-                            "tool_name": name,
-                            "ui_component": TOOL_TO_COMPONENT.get(name, "generic"),
-                            "data": tool_data
-                        })
-                        print(f"✅ Tool '{name}' returned successfully.", flush=True)
-                    except Exception as e:
-                        formatted_result = {"error": str(e)}
-                        triggered_tools.append({
-                            "tool_name": name,
-                            "ui_component": TOOL_TO_COMPONENT.get(name, "generic"),
-                            "error": str(e),
-                            "data": None
-                        })
-                        print(f"❌ Tool '{name}' failed: {e}", flush=True)
-                else:
-                    formatted_result = {"error": f"Tool '{name}' not found."}
-                    triggered_tools.append({
-                        "tool_name": name,
-                        "ui_component": "generic",
-                        "error": f"Tool '{name}' not found.",
-                        "data": None
-                    })
-                    print(f"⚠️ Tool '{name}' not found.", flush=True)
-                    
-                part = types.Part(
-                    function_response=types.FunctionResponse(
-                        name=name,
-                        response=formatted_result
+        for model_name in MODELS:
+            try:
+                # Handle chat history session matching current model
+                if request.clear_history or request.session_id not in state.active_chats:
+                    chat = state.genai_client.chats.create(
+                        model=model_name,
+                        config=state.generate_config
                     )
-                )
-                tool_responses.append(part)
+                    state.active_chats[request.session_id] = {
+                        "chat": chat,
+                        "model": model_name
+                    }
+                else:
+                    session_info = state.active_chats[request.session_id]
+                    if session_info["model"] == model_name:
+                        chat = session_info["chat"]
+                    else:
+                        # Migrate existing history to the failover model
+                        history = session_info["chat"].get_history()
+                        chat = state.genai_client.chats.create(
+                            model=model_name,
+                            history=history,
+                            config=state.generate_config
+                        )
+                        state.active_chats[request.session_id] = {
+                            "chat": chat,
+                            "model": model_name
+                        }
                 
-            # Send tool outputs back to model (run blocking SDK call in background thread)
-            response = await asyncio.to_thread(chat.send_message, tool_responses)
-            
+                # Send initial message (run blocking SDK call in background thread)
+                response = await asyncio.to_thread(chat.send_message, request.message)
+                
+                # Process tool execution loop
+                while response.function_calls:
+                    tool_responses = []
+                    for call in response.function_calls:
+                        name = call.name
+                        args = call.args
+                        print(f"⚙️ Running tool '{name}' with args: {args}...", flush=True)
+                        
+                        if name in state.tool_map:
+                            session = state.tool_map[name]
+                            try:
+                                tool_result = await session.call_tool(name, args)
+                                formatted_result = {
+                                    "content": [block.model_dump() for block in tool_result.content]
+                                }
+                                
+                                tool_data = extract_tool_data(tool_result)
+                                triggered_tools.append({
+                                    "tool_name": name,
+                                    "ui_component": TOOL_TO_COMPONENT.get(name, "generic"),
+                                    "data": tool_data
+                                })
+                                print(f"✅ Tool '{name}' returned successfully.", flush=True)
+                            except Exception as e:
+                                formatted_result = {"error": str(e)}
+                                triggered_tools.append({
+                                    "tool_name": name,
+                                    "ui_component": TOOL_TO_COMPONENT.get(name, "generic"),
+                                    "error": str(e),
+                                    "data": None
+                                })
+                                print(f"❌ Tool '{name}' failed: {e}", flush=True)
+                        else:
+                            formatted_result = {"error": f"Tool '{name}' not found."}
+                            triggered_tools.append({
+                                "tool_name": name,
+                                "ui_component": "generic",
+                                "error": f"Tool '{name}' not found.",
+                                "data": None
+                            })
+                            print(f"⚠️ Tool '{name}' not found.", flush=True)
+                            
+                        part = types.Part(
+                            function_response=types.FunctionResponse(
+                                name=name,
+                                response=formatted_result
+                            )
+                        )
+                        tool_responses.append(part)
+                        
+                    # Send tool outputs back to model (run blocking SDK call in background thread)
+                    response = await asyncio.to_thread(chat.send_message, tool_responses)
+                
+                # If generation completes successfully, break from failover loop
+                break
+                
+            except Exception as e:
+                err_msg = str(e)
+                is_quota_error = any(term in err_msg for term in ["429", "ResourceExhausted", "Quota exceeded", "RPD limit reached"])
+                if is_quota_error and model_name != MODELS[-1]:
+                    print(f"⚠️ WARNING: Model '{model_name}' exhausted quota/limits. Error: {err_msg}. Failing over to '{MODELS[-1]}'...", file=sys.stderr, flush=True)
+                    # Clear partially accumulated tools since we are retrying fresh
+                    triggered_tools = []
+                    continue
+                else:
+                    raise e
+                    
         # Compile response structure
         response_text = response.text if response.text else "[No text response returned]"
         
