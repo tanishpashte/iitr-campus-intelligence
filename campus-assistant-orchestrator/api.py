@@ -168,48 +168,35 @@ async def lifespan(app: FastAPI):
         )
         
         print("Handshakes complete. Aggregating tools...", flush=True)
-        lib_tools = await state.session_lib.list_tools()
-        acad_tools = await state.session_acad.list_tools()
-        ev_tools = await state.session_ev.list_tools()
-        mess_tools = await state.session_mess.list_tools()
-        
-        # Map tools and declarations
-        for tool in lib_tools.tools:
-            state.tool_map[tool.name] = state.session_lib
-            state.function_declarations.append(
-                types.FunctionDeclaration(
-                    name=tool.name,
-                    description=tool.description,
-                    parametersJsonSchema=tool.inputSchema
-                )
-            )
-        for tool in acad_tools.tools:
-            state.tool_map[tool.name] = state.session_acad
-            state.function_declarations.append(
-                types.FunctionDeclaration(
-                    name=tool.name,
-                    description=tool.description,
-                    parametersJsonSchema=tool.inputSchema
-                )
-            )
-        for tool in ev_tools.tools:
-            state.tool_map[tool.name] = state.session_ev
-            state.function_declarations.append(
-                types.FunctionDeclaration(
-                    name=tool.name,
-                    description=tool.description,
-                    parametersJsonSchema=tool.inputSchema
-                )
-            )
-        for tool in mess_tools.tools:
-            state.tool_map[tool.name] = state.session_mess
-            state.function_declarations.append(
-                types.FunctionDeclaration(
-                    name=tool.name,
-                    description=tool.description,
-                    parametersJsonSchema=tool.inputSchema
-                )
-            )
+        try:
+            from anyio import ClosedResourceError
+        except ImportError:
+            ClosedResourceError = Exception
+
+        async def register_session_tools(session, name):
+            if session is None:
+                print(f"WARNING: Cannot list tools for '{name}' because session is None.", flush=True)
+                return
+            try:
+                tools_result = await session.list_tools()
+                for tool in tools_result.tools:
+                    state.tool_map[tool.name] = session
+                    state.function_declarations.append(
+                        types.FunctionDeclaration(
+                            name=tool.name,
+                            description=tool.description,
+                            parametersJsonSchema=tool.inputSchema
+                        )
+                    )
+            except ClosedResourceError as e:
+                print(f"WARNING: MCP session '{name}' connection closed or failed handshake. Skipping tool registration. Error: {e}", flush=True)
+            except Exception as e:
+                print(f"WARNING: Failed to list tools for '{name}' session: {e}", flush=True)
+
+        await register_session_tools(state.session_lib, "library")
+        await register_session_tools(state.session_acad, "academics")
+        await register_session_tools(state.session_ev, "events")
+        await register_session_tools(state.session_mess, "mess")
             
         print(f"Total tools discovered and registered: {len(state.function_declarations)}", flush=True)
         

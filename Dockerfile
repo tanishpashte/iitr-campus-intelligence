@@ -1,6 +1,9 @@
 # Use an official lightweight Python image
 FROM python:3.11-slim
 
+# Force HuggingFace to run in offline mode
+ENV HF_HUB_OFFLINE=1
+
 # Set the working directory to the repository root
 WORKDIR /app
 
