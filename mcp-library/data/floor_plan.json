@@ -1,0 +1,167 @@
+{
+  "building": "Mahatma Gandhi Central Library",
+  "institution": "IIT Roorkee",
+  "floors": {
+    "lower_basement": {
+      "name": "Lower Basement Floor",
+      "areas": {
+        "collections": [
+          "Old Periodicals",
+          "Theses & Dissertations",
+          "Archives",
+          "TBS Collection",
+          "DOR Collection"
+        ],
+        "research_facilities": [
+          "Cyber Room",
+          "Imaging Room"
+        ],
+        "meeting_spaces": [
+          "Conference Room",
+          "Exhibition Area"
+        ],
+        "administrative": [
+          "Server Room",
+          "Office",
+          "Staff Room",
+          "Store"
+        ],
+        "infrastructure": [
+          "AHU",
+          "UPS Room",
+          "AC Plant"
+        ]
+      }
+    },
+
+    "ground_floor": {
+      "name": "Ground Floor",
+      "areas": {
+        "administration": [
+          "Librarian Office",
+          "Meeting Room",
+          "Visitors Room",
+          "General Office"
+        ],
+        "circulation_services": [
+          "Issue Counter",
+          "Return Counter",
+          "Assistance Desk",
+          "I/C Circulation"
+        ],
+        "collections": [
+          "Reference Section",
+          "Current Periodicals",
+          "Overnight Collection"
+        ],
+        "facilities": [
+          "E-Resource Terminals",
+          "Photostat Section",
+          "24x7 Reading Room"
+        ]
+      }
+    },
+
+    "first_floor": {
+      "name": "First Floor",
+      "areas": {
+        "acquisition": [
+          "I/C Acquisition",
+          "Acquisition Section"
+        ],
+        "technical_services": [
+          "Technical Section",
+          "I/C Technical",
+          "I/C Automation"
+        ],
+        "maintenance": [
+          "Binding Section",
+          "I/C Binding",
+          "I/C Maintenance"
+        ],
+        "study_spaces": [
+          "Reading Area"
+        ],
+        "collections": [
+          "Stacks"
+        ],
+        "architectural_features": [
+          "Dome",
+          "Skylight"
+        ]
+      }
+    },
+
+    "second_floor": {
+      "name": "Second Floor",
+      "areas": {
+        "study_spaces": [
+          "Reading Tables",
+          "Study Carrels"
+        ],
+        "collections": [
+          "Stacks"
+        ],
+        "administration": [
+          "Binding Room",
+          "Store",
+          "Section I/C Room"
+        ],
+        "features": [
+          "Terrace Garden",
+          "Open Terrace",
+          "Dome Opening",
+          "Skylight"
+        ]
+      }
+    }
+  },
+
+  "location_index": {
+    "Librarian Office": "ground_floor",
+    "Meeting Room": "ground_floor",
+    "Visitors Room": "ground_floor",
+    "Issue Counter": "ground_floor",
+    "Return Counter": "ground_floor",
+    "Assistance Desk": "ground_floor",
+    "Reference Section": "ground_floor",
+    "Current Periodicals": "ground_floor",
+    "Overnight Collection": "ground_floor",
+    "E-Resource Terminals": "ground_floor",
+    "Photostat Section": "ground_floor",
+    "24x7 Reading Room": "ground_floor",
+
+    "I/C Acquisition": "first_floor",
+    "Acquisition Section": "first_floor",
+    "Technical Section": "first_floor",
+    "I/C Technical": "first_floor",
+    "I/C Automation": "first_floor",
+    "Binding Section": "first_floor",
+    "I/C Binding": "first_floor",
+    "I/C Maintenance": "first_floor",
+    "Reading Area": "first_floor",
+    "Stacks": [
+      "first_floor",
+      "second_floor"
+    ],
+
+    "Reading Tables": "second_floor",
+    "Study Carrels": "second_floor",
+    "Binding Room": "second_floor",
+    "Section I/C Room": "second_floor",
+    "Terrace Garden": "second_floor",
+    "Open Terrace": "second_floor",
+
+    "Old Periodicals": "lower_basement",
+    "Theses & Dissertations": "lower_basement",
+    "Archives": "lower_basement",
+    "Cyber Room": "lower_basement",
+    "Conference Room": "lower_basement",
+    "Exhibition Area": "lower_basement",
+    "Server Room": "lower_basement",
+    "Imaging Room": "lower_basement",
+    "Staff Room": "lower_basement",
+    "Office": "lower_basement",
+    "Store": "lower_basement"
+  }
+}

@@ -1,0 +1,95 @@
+{
+    "source": "https://mgcl.iitr.ac.in/ebooks.php",
+    "category": "e-Books",
+    "resource_count": 22,
+    "resources": [
+        {
+            "title": "Guidelines to access e-books",
+            "url": "https://mgcl.iitr.ac.in/uploads/Guidelines_eBooks.pdf"
+        },
+        {
+            "title": "ACS eBooks ONLINE",
+            "url": "https://pubs.acs.org/page/books/index.html"
+        },
+        {
+            "title": "Bloomsbury Architecture Library",
+            "url": "https://www.bloomsburyarchitecturelibrary.com/"
+        },
+        {
+            "title": "Bloomsbury Design Library",
+            "url": "https://www.bloomsburydesignlibrary.com/"
+        },
+        {
+            "title": "CBS eBooks ONLINE",
+            "url": "http://www.eduport-global.com/"
+        },
+        {
+            "title": "CUP eBooks ONLINE",
+            "url": "https://www.cambridge.org/core/what-we-publish/books"
+        },
+        {
+            "title": "DeGruyter Press ONLINE",
+            "url": "https://www.degruyter.com/browse?authorCount=5&pageSize=50&paidAccess=true&searchTitles=true&sort=datedescending"
+        },
+        {
+            "title": "Elgar Press eBooks ONLINE",
+            "url": "https://www.elgaronline.com/browse?level=parent&pageSize=10&sort=datedescending"
+        },
+        {
+            "title": "Elsevier ScienceDirect eBooks ONLINE",
+            "url": "https://www.sciencedirect.com/browse/journals-and-books?contentType=BK"
+        },
+        {
+            "title": "Emerald Business eBooks ONLINE",
+            "url": "https://www.emerald.com/insight/products"
+        },
+        {
+            "title": "IoP eBooks ONLINE",
+            "url": "https://iopscience.iop.org/bookList/10/1"
+        },
+        {
+            "title": "John Wiley eBooks ONLINE",
+            "url": "http://www.wileyindia.com/iitroorkee"
+        },
+        {
+            "title": "MGH Access Engineering ONLINE",
+            "url": "https://www.accessengineeringlibrary.com/front?implicit-login=true"
+        },
+        {
+            "title": "MGH Education eBooks ONLINE",
+            "url": "http://mcgrawhilleducation.pdn.ipublishcentral.com/"
+        },
+        {
+            "title": "OUP Handbooks (OHO) ONLINE",
+            "url": "https://www.oxfordhandbooks.com/#"
+        },
+        {
+            "title": "OUP Scholarships (OSO) ONLINE",
+            "url": "https://www.oxfordscholarship.com/"
+        },
+        {
+            "title": "Pearson ProQUEST eBooks ONLINE",
+            "url": "https://ebookcentral.proquest.com/lib/iitrookee/search.action?op=advance&bookStatus=1&query="
+        },
+        {
+            "title": "Springer Nature eBooks ONLINE",
+            "url": "https://link.springer.com/"
+        },
+        {
+            "title": "T&F CRCnetBase eBooks ONLINE",
+            "url": "https://www.taylorfrancis.com/collections"
+        },
+        {
+            "title": "The Feynman Lectures on Physics ONLINE",
+            "url": "http://www.feynmanlectures.caltech.edu/"
+        },
+        {
+            "title": "The World eBook Library ONLINE",
+            "url": "http://community.worldlibrary.in/?AffiliateKey=NDL-RV1151"
+        },
+        {
+            "title": "World Scientific",
+            "url": "https://www.worldscientific.com/page/holdings/indian-inst-of-technology-roor"
+        }
+    ]
+}

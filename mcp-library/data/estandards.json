@@ -1,0 +1,27 @@
+{
+    "source": "https://mgcl.iitr.ac.in/estandards.php",
+    "category": "estandards",
+    "resource_count": 5,
+    "resources": [
+        {
+            "title": "ACI MCP (ACI Concrete Codes, Specifications, and Practices access only on login and password basis please contact journals@iitr.ac.in)",
+            "url": "https://www.concrete.org/publications/typesofpublications/standards.aspx"
+        },
+        {
+            "title": "ASTM Standards",
+            "url": "https://compass.astm.org"
+        },
+        {
+            "title": "British Standards",
+            "url": "https://standards.bsbedge.com"
+        },
+        {
+            "title": "IS Standards (BIS)",
+            "url": "https://standards.bsb.co.in"
+        },
+        {
+            "title": "IEC Standards",
+            "url": "https://standards.bsbedge.com"
+        }
+    ]
+}

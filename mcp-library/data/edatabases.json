@@ -1,0 +1,119 @@
+{
+    "source": "https://mgcl.iitr.ac.in/edatabases.php",
+    "category": "e-Databases",
+    "resource_count": 28,
+    "resources": [
+        {
+            "title": "ABI/INFORM Complete Collection",
+            "url": "https://www.proquest.com/index"
+        },
+        {
+            "title": "ACE EQUITY Nxt-WEB",
+            "url": "https://www.aceequitynxt.com/"
+        },
+        {
+            "title": "ACE MF Nxt-WEB",
+            "url": "https://www.acemfnxt.com/"
+        },
+        {
+            "title": "Artstor Digital Library (Image Database)",
+            "url": "https://www.jstor.org/images"
+        },
+        {
+            "title": "ASME Conference Proceedings",
+            "url": "https://asmedigitalcollection.asme.org/proceedings"
+        },
+        {
+            "title": "Bloomberg (Multi-users)",
+            "url": "https://mgcl.iitr.ac.in/edatabases.php"
+        },
+        {
+            "title": "Derwent Innovation (Patents Database)",
+            "url": "https://www.derwentinnovation.com/login/"
+        },
+        {
+            "title": "EBSCO Business Sources Ultimate",
+            "url": "https://research.ebsco.com/c/lgwkxs?db=bsu"
+        },
+        {
+            "title": "EBSCO EconLite With Full Text",
+            "url": "https://research.ebsco.com/c/lgwkxs?db=eoh"
+        },
+        {
+            "title": "Emerald e-Cases Collections",
+            "url": "https://www.emerald.com/insight/content/case-studies"
+        },
+        {
+            "title": "InCites",
+            "url": "https://incites.clarivate.com/"
+        },
+        {
+            "title": "Indiastat(Single User)",
+            "url": "https://mgcl.iitr.ac.in/indiastatdistricts.com/Home/Login"
+        },
+        {
+            "title": "JSTOR: Archive Journals & primary Sources",
+            "url": "https://www.jstor.org/"
+        },
+        {
+            "title": "MathSciNet",
+            "url": "https://mathscinet.ams.org/"
+        },
+        {
+            "title": "McGraw-Hills Access Engineering (e-Book)",
+            "url": "https://www.accessengineeringlibrary.com/front?implicit-login=true"
+        },
+        {
+            "title": "OnePetro",
+            "url": "https://onepetro.org/"
+        },
+        {
+            "title": "Private Circle",
+            "url": "https://privatecircle.co/"
+        },
+        {
+            "title": "Prowess (Formerly Prowess Interactive Quarey IQ)",
+            "url": "https://prowess.cmie.com/"
+        },
+        {
+            "title": "PsycARTICLES",
+            "url": "https://psycnet.apa.org/"
+        },
+        {
+            "title": "Sage Business Cases",
+            "url": "https://sk.sagepub.com/cases"
+        },
+        {
+            "title": "Sage Research Method",
+            "url": "https://methods.sagepub.com/"
+        },
+        {
+            "title": "Sci-Finder Scholar",
+            "url": "https://sso.cas.org/as/authorization.oauth2?response_type=code&client_id=scifinder-n&redirect_uri=https%3A%2F%2Fscifinder-n.cas.org%2Fpa%2Foidc%2Fcb&state=eyJ6aXAiOiJERUYiLCJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2Iiwia2lkIjoiLTlObXBocnFjWFNqbFdMVXg5TVNfcTQ4X0NZIiwic3VmZml4IjoiVkI4TWdxLjE3NDIyODE4NjIifQ..1dj4NHqJ-7Wp8obLGif5-Q.uDwxQQSyWkxmgIZisM3rHfWI6x9IM2gHpHelYYiLnmL5SSWG3AqheW7kiTJxA8JgDRdJlZU_X-xG6xF5MOnw7w.bo7s7fboWLepuMn9T3PNXQ&nonce=zRqM5roAR59RCrxDYi-pbSsC68hAVrL5CCfp9dwBU0M&scope=openid%20address%20email%20phone%20profile&vnd_pi_requested_resource=https%3A%2F%2Fscifinder-n.cas.org%2F&vnd_pi_application_name=SciFinder-nIDF"
+        },
+        {
+            "title": "SCOPUS",
+            "url": "https://www.scopus.com/"
+        },
+        {
+            "title": "Statista Campus License (Including Consumer Insight +Ecommerce Insight)",
+            "url": "https://www.statista.com/"
+        },
+        {
+            "title": "The Arabidopsis Information Resources (TAIR)",
+            "url": "https://www.arabidopsis.org/"
+        },
+        {
+            "title": "Tracxn Database (Startup Intellegance Platform, Private Market Data, Company & Sector Research, Funding & Value Insight, Investors)",
+            "url": "https://tracxn.com/"
+        },
+        {
+            "title": "UpToDate (Medical Database)",
+            "url": "https://www.uptodate.com/"
+        },
+        {
+            "title": "Venture Intelligence Database: PE-VC Deals Database with LP Directory & M&A Deals Database",
+            "url": "https://www.ventureintelligence.com/"
+        }
+    ]
+}

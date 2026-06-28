@@ -1,0 +1,165 @@
+[
+    {
+        "name": "Dr. Nihar Kanta Patra",
+        "designation": "Librarian",
+        "phones": [
+            "01332-285939",
+            "285239"
+        ],
+        "emails": [
+            "library@iitr.ac"
+        ]
+    },
+    {
+        "name": "Dr. Sanjeev K Sunny",
+        "designation": "Deputy Librarian",
+        "phones": [
+            "01332-285939",
+            "285239"
+        ],
+        "emails": [
+            "library@iitr.ac",
+            "sksunnymgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Dr. Amarendra Kumar Sharma",
+        "designation": "Deputy Librarian",
+        "phones": [
+            "01332-285173"
+        ],
+        "emails": [
+            "amar.mgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Dr. Rimai Atonring",
+        "designation": "Assistant Librarian (Selection Grade)",
+        "phones": [
+            "01332-284873"
+        ],
+        "emails": [
+            "rimaimgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Dr. Ramniwas Soni",
+        "designation": "Assistant Librarian (Sr. Scale)",
+        "phones": [
+            "01332-286699"
+        ],
+        "emails": [
+            "ramsoni.mcl2015@iitr.ac"
+        ]
+    },
+    {
+        "name": "Dr. Sakhawat Hussain",
+        "designation": "Assistant Librarian (Sr. Scale)",
+        "phones": [
+            "01332-284906"
+        ],
+        "emails": [
+            "hussain.mgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. Arvind Kumar",
+        "designation": "Sr. Library Information Officer",
+        "phones": [
+            "01332-284573"
+        ],
+        "emails": [
+            "arvind50.mgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. Sudeshwar Ram",
+        "designation": "Library Information Officer",
+        "phones": [
+            "01332-284572"
+        ],
+        "emails": [
+            "sram.mgcl@iitr.ac",
+            "journals@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. R. K. Vishwakarma",
+        "designation": "Library Information Officer",
+        "phones": [
+            "01332-284232"
+        ],
+        "emails": []
+    },
+    {
+        "name": "Sh. Fateh Singh Meena",
+        "designation": "Library Information Officer",
+        "phones": [
+            "01332-286687"
+        ],
+        "emails": [
+            "fsmeena.mgcl2019@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. Santosh Kumar",
+        "designation": "Assistant Library Information Officer",
+        "phones": [
+            "01332-284572"
+        ],
+        "emails": [
+            "skumar.mgcl@iitr.ac",
+            "remind.mgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. Akhil Mitra",
+        "designation": "Assistant Library Information Officer",
+        "phones": [
+            "01332-284500"
+        ],
+        "emails": []
+    },
+    {
+        "name": "Sh. Daya Shankar Thakur",
+        "designation": "Library Information Assistant",
+        "phones": [
+            "01332-284571"
+        ],
+        "emails": []
+    },
+    {
+        "name": "Smt. Priyamvada Sharma",
+        "designation": "Senior Assistant",
+        "phones": [
+            "01332-284219"
+        ],
+        "emails": []
+    },
+    {
+        "name": "Sh. Neeraj Singh",
+        "designation": "Junior Assistant",
+        "phones": [
+            "01332-284571"
+        ],
+        "emails": []
+    },
+    {
+        "name": "Sh. Anil Kumar",
+        "designation": "Junior Assistant",
+        "phones": [
+            "01332-284571"
+        ],
+        "emails": [
+            "anil.mgcl@iitr.ac"
+        ]
+    },
+    {
+        "name": "Sh. Ramesh Chand",
+        "designation": "Sr. Library Attendant / CMTS",
+        "phones": [
+            "01332-284219"
+        ],
+        "emails": []
+    }
+]

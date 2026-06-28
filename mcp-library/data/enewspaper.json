@@ -1,0 +1,23 @@
+{
+    "source": "https://mgcl.iitr.ac.in/enewspaper_emagazines.php",
+    "category": "e-Newspaper/ e-Magazines",
+    "resource_count": 4,
+    "resources": [
+        {
+            "title": "Economics and Political Weekly Link The Economist Link The Ken Link",
+            "url": "https://www.epw.in/"
+        },
+        {
+            "title": "Economics and Political Weekly",
+            "url": "https://www.epw.in/"
+        },
+        {
+            "title": "The Economist",
+            "url": "https://www.economist.com/"
+        },
+        {
+            "title": "The Ken",
+            "url": "https://the-ken.com/?Y3VyZHRpcA=1779705455171"
+        }
+    ]
+}

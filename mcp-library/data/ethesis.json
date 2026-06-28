@@ -1,0 +1,23 @@
+{
+    "source": "https://mgcl.iitr.ac.in/ethesis_edissertations.php",
+    "category": "ethesis",
+    "resource_count": 4,
+    "resources": [
+        {
+            "title": "Theses and Dissertations@IITR",
+            "url": "http://shodhbhagirathi.iitr.ac.in:8081/jspui/"
+        },
+        {
+            "title": "Proquest",
+            "url": "http://search.proquest.com/index"
+        },
+        {
+            "title": "Open Access Theses and Dissertations",
+            "url": "http://oatd.org/"
+        },
+        {
+            "title": "Network Digital Library of Theses & Dissertations",
+            "url": "http://www.ndltd.org/"
+        }
+    ]
+}

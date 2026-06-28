@@ -1,0 +1,409 @@
+{
+    "title": "List of Textbooks for Ist Year Students",
+    "scheme": "Text Book Loan Scheme (TBLS)",
+    "total_books": 67,
+    "books": [
+        {
+            "serial_number": 1,
+            "author": "Arora, S.",
+            "title": "Computer Science with C++ Vol. I",
+            "total_copies": 54
+        },
+        {
+            "serial_number": 2,
+            "author": "Arora, S.",
+            "title": "Computer Science with C++ Vol. II",
+            "total_copies": 57
+        },
+        {
+            "serial_number": 3,
+            "author": "Bernstein, Jeremy",
+            "title": "Modern physics",
+            "total_copies": 10
+        },
+        {
+            "serial_number": 4,
+            "author": "Bhatt,N.D.",
+            "title": "Machine drawing",
+            "total_copies": 62
+        },
+        {
+            "serial_number": 5,
+            "author": "Bhatt,N.D.",
+            "title": "Engineering drawing",
+            "total_copies": 51
+        },
+        {
+            "serial_number": 6,
+            "author": "Bieser Arthur",
+            "title": "Concepts of modern Physics",
+            "total_copies": 458
+        },
+        {
+            "serial_number": 7,
+            "author": "Boylestad,R.L.",
+            "title": "Electronic Devices and Theory Circuit Theory",
+            "total_copies": 125
+        },
+        {
+            "serial_number": 8,
+            "author": "Cengel, Y.A.",
+            "title": "Thermodynamics",
+            "total_copies": 102
+        },
+        {
+            "serial_number": 9,
+            "author": "Chandra",
+            "title": "Engineering Graphics",
+            "total_copies": 109
+        },
+        {
+            "serial_number": 10,
+            "author": "Davis,M.L.",
+            "title": "Water and waste water engg.",
+            "total_copies": 119
+        },
+        {
+            "serial_number": 11,
+            "author": "Del Toro,V.",
+            "title": "Principles of Electrical Engineering",
+            "total_copies": 62
+        },
+        {
+            "serial_number": 12,
+            "author": "Feynman, R. P.",
+            "title": "Lectures on Physics Vol. I",
+            "total_copies": 24
+        },
+        {
+            "serial_number": 13,
+            "author": "Feynman, R. P.",
+            "title": "Lectures on Physics Vol. II",
+            "total_copies": 25
+        },
+        {
+            "serial_number": 14,
+            "author": "Feynman, R. P.",
+            "title": "Lectures on Physics Vol. III",
+            "total_copies": 24
+        },
+        {
+            "serial_number": 15,
+            "author": "Finar,I.L.",
+            "title": "Organic Chemistry  Vol-I",
+            "total_copies": 26
+        },
+        {
+            "serial_number": 16,
+            "author": "Finar,I.L.",
+            "title": "Organic Chemistry  Vol-II",
+            "total_copies": 28
+        },
+        {
+            "serial_number": 17,
+            "author": "Fletcher,S.B.",
+            "title": "A History of Architecture",
+            "total_copies": 29
+        },
+        {
+            "serial_number": 18,
+            "author": "Ghatak,A.",
+            "title": "Optics",
+            "total_copies": 194
+        },
+        {
+            "serial_number": 19,
+            "author": "Gill, P.S.",
+            "title": "Machine drawing",
+            "total_copies": 86
+        },
+        {
+            "serial_number": 20,
+            "author": "Gill, P.S.",
+            "title": "Engineering Design",
+            "total_copies": 34
+        },
+        {
+            "serial_number": 21,
+            "author": "Grewal, B. S.",
+            "title": "Higher Eng Mathematics",
+            "total_copies": 375
+        },
+        {
+            "serial_number": 22,
+            "author": "Guha",
+            "title": "Basic Thermodynamics",
+            "total_copies": 36
+        },
+        {
+            "serial_number": 23,
+            "author": "Gupta,Kumar",
+            "title": "Practical Physics",
+            "total_copies": 112
+        },
+        {
+            "serial_number": 24,
+            "author": "Gusiorowicz, S.",
+            "title": "Quantum Physics",
+            "total_copies": 49
+        },
+        {
+            "serial_number": 25,
+            "author": "Halliday/Kengry",
+            "title": "Physics Vol-1 & 2",
+            "total_copies": 51
+        },
+        {
+            "serial_number": 26,
+            "author": "Halliday/Resnick",
+            "title": "Fundamentals of Physics",
+            "total_copies": 50
+        },
+        {
+            "serial_number": 27,
+            "author": "Hecht/Eugene",
+            "title": "Optics, 4th ed",
+            "total_copies": 18
+        },
+        {
+            "serial_number": 28,
+            "author": "Hibbeler, R.C",
+            "title": "Engg. Mechanics statics and dynamics",
+            "total_copies": 178
+        },
+        {
+            "serial_number": 29,
+            "author": "Hubbard, J. R.",
+            "title": "Programming with C++",
+            "total_copies": 348
+        },
+        {
+            "serial_number": 30,
+            "author": "Hughes, E.",
+            "title": "Electrical of Electronic Technology",
+            "total_copies": 59
+        },
+        {
+            "serial_number": 31,
+            "author": "Huheey, J.E.",
+            "title": "Inorganic Chemistry",
+            "total_copies": 106
+        },
+        {
+            "serial_number": 32,
+            "author": "Jauhar, S.P",
+            "title": "Modern ABC of Chemistry",
+            "total_copies": 135
+        },
+        {
+            "serial_number": 33,
+            "author": "Kothari & Nagrath",
+            "title": "Basic Electrical Engineering",
+            "total_copies": 5
+        },
+        {
+            "serial_number": 34,
+            "author": "Krane",
+            "title": "Modern Physics",
+            "total_copies": 146
+        },
+        {
+            "serial_number": 35,
+            "author": "Lee,J.D.",
+            "title": "Concise Inorganic Chemistry",
+            "total_copies": 78
+        },
+        {
+            "serial_number": 36,
+            "author": "Mahan.B.H.",
+            "title": "University Chemistry",
+            "total_copies": 15
+        },
+        {
+            "serial_number": 37,
+            "author": "Mani, HS",
+            "title": "Introducation to Modern Physics",
+            "total_copies": 287
+        },
+        {
+            "serial_number": 38,
+            "author": "Master",
+            "title": "Introduction to Environmental Engineering and Science",
+            "total_copies": 127
+        },
+        {
+            "serial_number": 39,
+            "author": "Mathur,A.B.",
+            "title": "Advanced Engineering Mathematics",
+            "total_copies": 136
+        },
+        {
+            "serial_number": 40,
+            "author": "Mazumdar, Deepak",
+            "title": "A first course in iron and Steel Making",
+            "total_copies": 73
+        },
+        {
+            "serial_number": 41,
+            "author": "Millman Halkias",
+            "title": "Electronic devices and circuits",
+            "total_copies": 140
+        },
+        {
+            "serial_number": 42,
+            "author": "Mittle",
+            "title": "Basic Electrical Engineering",
+            "total_copies": 23
+        },
+        {
+            "serial_number": 43,
+            "author": "Morin, David",
+            "title": "Classical Mechanics",
+            "total_copies": 109
+        },
+        {
+            "serial_number": 44,
+            "author": "Morrison & Boyd",
+            "title": "Organic Chemistry",
+            "total_copies": 219
+        },
+        {
+            "serial_number": 45,
+            "author": "Odum,E.P.",
+            "title": "Fundamentals of Ecology",
+            "total_copies": 35
+        },
+        {
+            "serial_number": 46,
+            "author": "Puri & Sharma",
+            "title": "Principles of Inorganic Chemistry",
+            "total_copies": 50
+        },
+        {
+            "serial_number": 47,
+            "author": "Puri Sharma Pathania",
+            "title": "Principles/Elements of Physical Chemistry",
+            "total_copies": 18
+        },
+        {
+            "serial_number": 48,
+            "author": "Pytel, Kiusalaas",
+            "title": "Engineering Mechanics Statistics and Dynamics",
+            "total_copies": 50
+        },
+        {
+            "serial_number": 49,
+            "author": "Raghuwanshi,B.S.",
+            "title": "A course in Workshop Technology Vol-I",
+            "total_copies": 49
+        },
+        {
+            "serial_number": 50,
+            "author": "Raghuwanshi,B.S.",
+            "title": "A course in Workshop Technology Vol-II",
+            "total_copies": 38
+        },
+        {
+            "serial_number": 51,
+            "author": "Reif,F.",
+            "title": "Statistical Physics Vol-5",
+            "total_copies": 229
+        },
+        {
+            "serial_number": 52,
+            "author": "Reif,F.",
+            "title": "Fundamentals of statistical and thermal physics",
+            "total_copies": 15
+        },
+        {
+            "serial_number": 53,
+            "author": "Richard E Sontag",
+            "title": "Fundamental of Thermodynamics",
+            "total_copies": 38
+        },
+        {
+            "serial_number": 54,
+            "author": "Rogers,Mayhew",
+            "title": "Engineering Thermodynamics",
+            "total_copies": 15
+        },
+        {
+            "serial_number": 55,
+            "author": "Sadiku, Mathew N.",
+            "title": "Elements of Electromagnetic",
+            "total_copies": 148
+        },
+        {
+            "serial_number": 56,
+            "author": "Saxena, A.K.",
+            "title": "Principle of modern Physics",
+            "total_copies": 34
+        },
+        {
+            "serial_number": 57,
+            "author": "Serway, R. A.",
+            "title": "Modern physics",
+            "total_copies": 225
+        },
+        {
+            "serial_number": 58,
+            "author": "Sinha, K. C.",
+            "title": "A Text Book of Mathematics Vol-2",
+            "total_copies": 284
+        },
+        {
+            "serial_number": 59,
+            "author": "Smith,J.E.",
+            "title": "Biotechnology",
+            "total_copies": 126
+        },
+        {
+            "serial_number": 60,
+            "author": "Sykes,P.",
+            "title": "A guide book to Mechanism in Organic Chemistry",
+            "total_copies": 168
+        },
+        {
+            "serial_number": 61,
+            "author": "Theraja,B.L.",
+            "title": "A textbook of Electrical Technology Vol-I",
+            "total_copies": 26
+        },
+        {
+            "serial_number": 62,
+            "author": "Theraja,B.L.",
+            "title": "A textbook of Electrical Technology Vol-II",
+            "total_copies": 34
+        },
+        {
+            "serial_number": 63,
+            "author": "Thomas Finney",
+            "title": "Calculus",
+            "total_copies": 18
+        },
+        {
+            "serial_number": 64,
+            "author": "Van Wylen",
+            "title": "Fundamentals of Classical Thermodynamics",
+            "total_copies": 148
+        },
+        {
+            "serial_number": 65,
+            "author": "Verma,H.C.",
+            "title": "Concepts of Physics Vol-I",
+            "total_copies": 168
+        },
+        {
+            "serial_number": 66,
+            "author": "Verma,H.C.",
+            "title": "Concepts of Physics Vol-II",
+            "total_copies": 85
+        },
+        {
+            "serial_number": 67,
+            "author": "Young,H.D.",
+            "title": "University Physics",
+            "total_copies": 45
+        }
+    ]
+}

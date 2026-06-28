@@ -12,4 +12,3 @@ __pycache__/
 # OS files
 .DS_Store
 
-/mcp-library/data/*
